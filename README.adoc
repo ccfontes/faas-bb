@@ -30,7 +30,10 @@ Create Babashka Functions as with the following command example:
 ----
 faas new --lang bb my-bb-function
 ----
-A new project is created for a function defined as `my-bb-function`. It will contain an `fn.handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
+A new project is created for a function defined as `my-bb-function`. It will contain:
+
+* a `function.handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
+* a `bb.edn` file specifying classpath to find `function.handler`.
 
 == Specs ==
 
@@ -38,7 +41,7 @@ OpenFaaS watchdog is `of-watchdog` in https://github.com/openfaas/of-watchdog#3-
 
 == link:function-examples[Function examples] ==
 
-See the link:function-examples[function-examples] directory to find a fully working set of OpenFaaS Functions written in Babashka.
+See the link:examples[examples] directory to find a fully working set of OpenFaaS Functions written in Babashka.
 
 == Tests ==
 
