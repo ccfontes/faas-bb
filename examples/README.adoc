@@ -15,7 +15,7 @@ See https://docs.openfaas.com/tutorials/first-python-function/[OpenFaaS website]
 
 == Get OpenFaaS template ==
 
-Get the Idris 2 OpenFaaS template:
+Get the Babashka OpenFaaS template:
 [source, bash]
 ----
 faas template pull https://github.com/ccfontes/faas-bb
