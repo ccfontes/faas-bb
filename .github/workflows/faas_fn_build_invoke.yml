@@ -1,0 +1,38 @@
+name: Tests
+on:
+  push:
+    branches:
+      - "*"
+    paths-ignore:
+      - "*.adoc"
+  pull_request:
+    paths-ignore:
+      - "*.adoc"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install OpenFaaS CLI
+        run: curl -sSL https://cli.openfaas.com | sudo -E sh
+      - name: Build Function from scratch and invoke it
+        run: |
+          mkdir test
+          cd test
+          faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }} 
+          faas new --lang bb my-bb-function --prefix ghcr.io/${{ github.repository_owner }}
+          faas build -f my-bb-function.yml
+          if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj)" != "Hello world" ]; then
+            exit 1
+          fi
+      - name: Build provided Function examples and invoke them
+        env:
+          DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
+        run: |
+          git clone https://github.com/${{ github.repository_owner }}/faas-bb.git
+          cd faas-bb/function-examples
+          git checkout ${{ github.head_ref || github.ref_name }}
+          faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }}
+          faas build
+          if [ "$(echo "world" | docker run -i ghcr.io/${{ github.repository_owner }}/bb-hello:latest ./index.clj)" != "Hello, world" ]; then
+              exit 1
+          fi

@@ -1,0 +1,4 @@
+language: bb
+fprocess: ./index.clj
+welcome_message: |
+  You have created a new Function which uses Babashka
