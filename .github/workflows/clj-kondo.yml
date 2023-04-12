@@ -16,5 +16,5 @@ jobs:
       - uses: actions/checkout@v1
       - uses: DeLaGuardo/clojure-lint-action@master
         with:
-          clj-kondo-args: --lint .
+          clj-kondo-args: --lint template/bb examples
           github_token: ${{ secrets.GITHUB_TOKEN }}
