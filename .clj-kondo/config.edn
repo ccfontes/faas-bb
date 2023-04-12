@@ -2,4 +2,4 @@
   {:namespace-name-mismatch
      {:exclude [function.handler]}
    :redefined-var
-     {exclude [function.handler/handler]}}}
+     {exclude {function.handler [handler]}}}}
