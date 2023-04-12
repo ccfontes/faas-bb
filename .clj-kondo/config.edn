@@ -1,5 +1,5 @@
 {:linters
   {:namespace-name-mismatch
-     {:exclude [function.handler]}
+     {:exclude [bb-hello.function.handler]}
    :redefined-var
      {:exclude {function.handler [handler]}}}}
