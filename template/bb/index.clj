@@ -1,6 +1,5 @@
 #!/usr/bin/env bb
 
-(require '[clojure.java.io :as io])
 (require '[function.handler :as function])
 
 (defn read-lines
