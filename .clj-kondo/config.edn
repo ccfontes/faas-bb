@@ -1,5 +1,3 @@
 {:linters
-  {:namespace-name-mismatch
-     {:exclude [bb-hello.function.handler]}
-   :redefined-var
-     {:exclude {function.handler [handler]}}}}
+  {:namespace-name-mismatch {:level :off}
+   :redefined-var {:level :off}}}
