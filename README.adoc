@@ -3,12 +3,17 @@
 :img-ci-hadolint-status: {url-proj}/actions/workflows/hadolint.yml/badge.svg
 :img-ci-clj-kondo-status: {url-proj}/actions/workflows/clj-kondo.yml/badge.svg
 :url-ci-status: "{url-proj}/actions"
-:url-ci-status-tests: "{url-proj}/faas_fn_build_invoke.yml"
-:url-ci-status-hadolint: "{url-proj}/hadolint.yml"
-:url-ci-status-clj-kondo: "{url-proj}clj-kondo.yml"
+:url-ci-status-tests: "{url-ci-status}/faas_fn_build_invoke.yml"
+:url-ci-status-hadolint: "{url-ci-status}/hadolint.yml"
+:url-ci-status-clj-kondo: "{url-ci-status}clj-kondo.yml"
 :img-license: https://img.shields.io/badge/license-MIT-black.svg
 
-= OpenFaaS Babashka template image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-clj-kondo}] image:{img-ci-clj-kondo-status}[link={url-ci-status-hadolint}] image:{img-license}[link=LICENSE] =
+= OpenFaaS Babashka template =
+
+image:{img-ci-tests-status}[link={url-ci-status-tests}]
+image:{img-ci-hadolint-status}[link={url-ci-status-clj-kondo}]
+image:{img-ci-clj-kondo-status}[link={url-ci-status-hadolint}]
+image:{img-license}[link=LICENSE]
 
 An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://github.com/babashka/babashka[Babashka].
 
