@@ -12,9 +12,9 @@ on:
 jobs:
   clj-kondo:
     runs-on: ubuntu-latest
-      steps:
-         - uses: actions/checkout@v1
-         - uses: DeLaGuardo/clojure-lint-action@master
-           with:
-             clj-kondo-args: --lint .
-             github_token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: DeLaGuardo/clojure-lint-action@master
+        with:
+          clj-kondo-args: --lint .
+          github_token: ${{ secrets.GITHUB_TOKEN }}
