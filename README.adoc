@@ -5,7 +5,7 @@
 :url-ci-status: "{url-proj}/actions"
 :img-license: https://img.shields.io/badge/license-MIT-black.svg
 
-= OpenFaaS Babashka template image:{img-ci-tests-status}[link={url-ci-status}] image:{img-ci-hadolint-status}[link={url-ci-status}] image:{:img-ci-clj-kondo-status}[link={url-ci-status}] image:{img-license}[link=LICENSE] =
+= OpenFaaS Babashka template image:{img-ci-tests-status}[link={url-ci-status}] image:{img-ci-hadolint-status}[link={url-ci-status}] image:{img-ci-clj-kondo-status}[link={url-ci-status}] image:{img-license}[link=LICENSE] =
 
 An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://github.com/babashka/babashka[Babashka].
 
