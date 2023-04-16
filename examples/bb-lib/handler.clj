@@ -9,6 +9,6 @@
 
 (defn handler [s]
   (let [v (select ["a" "b"] (edn/read-string s))]
-    (if (empty? v)
+    (if (= v [nil])
       ""
       (str v))))
