@@ -36,3 +36,15 @@ jobs:
           if [ "$(echo "world" | docker run -i ghcr.io/${{ github.repository_owner }}/bb-hello:latest ./index.clj)" != "Hello, world" ]; then
               exit 1
           fi
+          if [ "$(echo "scrambled" | docker run -i ghcr.io/${{ github.repository_owner }}/bb-lib:latest ./index.clj)" != "true" ]; then
+              exit 1
+          fi
+          if [ "$(echo "grilled" | docker run -i ghcr.io/${{ github.repository_owner }}/bb-lib:latest ./index.clj)" != "false" ]; then
+              exit 1
+          fi
+          if [ "$(echo '{"a" {"b" 10}}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-lib:latest ./index.clj)" != "[10]" ]; then
+              exit 1
+          fi
+          if [ "$(echo '{"a" 10}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-lib:latest ./index.clj)" != "" ]; then
+              exit 1
+          fi

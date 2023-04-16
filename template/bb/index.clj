@@ -4,10 +4,9 @@
 
 (defn read-lines
   ([] (read-lines ""))
-  ([acc] (let [line (read-line)]
-           (if line
-             (recur (str acc line))
-             acc))))
+  ([acc] (if-let [line (read-line)]
+           (recur (str acc line))
+           acc)))
 
 (defn main []
   (let [input (read-lines)
