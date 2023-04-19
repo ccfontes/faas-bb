@@ -21,7 +21,7 @@ WORKDIR $HOME
 COPY index.clj function/bb.edn ./
 COPY function function
 
-RUN bb deps
+RUN bb prepare
 
 EXPOSE 8080
 HEALTHCHECK --interval=2s CMD [ -e /tmp/.lock ] || exit 1
