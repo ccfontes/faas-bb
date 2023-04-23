@@ -1,0 +1,13 @@
+= Example with external libraries and tests =
+
+== Run unit tests ==
+
+[source, bash]
+----
+export DOCKER_REGISTRY_IMG_ORG_PATH=<registry org path>
+
+faas build --regex bb-lib
+
+docker run -i $DOCKER_REGISTRY_IMG_ORG_PATH/bb-lib:latest function/handler-test.clj
+----
+For now unit tests are shipped with production code. We'll figure this out in the future.

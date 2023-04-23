@@ -1,3 +1,0 @@
-{:linters
-  {:namespace-name-mismatch {:level :off}
-   :redefined-var {:level :off}}}
