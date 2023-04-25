@@ -1,4 +1,4 @@
-name: AsciiDoc Link Check
+name: Doc links
 
 on:
   push:
