@@ -1,4 +1,4 @@
-name: Lychee Broken Link Checker
+name: AsciiDoc Link Check
 
 on:
   push:
@@ -7,14 +7,14 @@ on:
   pull_request:
 
 jobs:
-  linkChecker:
+  link_check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Lychee Broken Link Checker
-        uses: lycheeverse/lychee-action@v1.7.0
+      - uses: actions/setup-node@v3
         with:
-          fail: true
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          node-version: 18
+      - name: Install asciidoc-link-check
+        run: npm install -g asciidoc-link-check
+      - name: Run asciidoc-link-check
+        run: find . -name \*.adoc -exec asciidoc-link-check -p {} \;
