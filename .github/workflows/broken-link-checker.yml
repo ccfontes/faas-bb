@@ -21,5 +21,4 @@ jobs:
           git clone https://github.com/${{ github.repository_owner }}/faas-bb.git
           cd faas-bb
           git checkout ${{ github.head_ref || github.ref_name }}
-          cd examples
           find . -name \*.adoc -exec asciidoc-link-check -p {} \;
