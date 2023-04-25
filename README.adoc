@@ -21,7 +21,7 @@ An https://github.com/openfaas[OpenFaaS] template for writing Functions in https
 
 == Prerequisites ==
 
-* https://docs.openfs.cm/cli/install/[OpenFaaS CLI]: makes the `faas` command available.
+* https://docs.openfaas.com/cli/install/[OpenFaaS CLI]: makes the `faas` command available.
 
 == Usage ==
 
