@@ -29,8 +29,9 @@ jobs:
           DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
         run: |
           git clone https://github.com/${{ github.repository_owner }}/faas-bb.git
-          cd faas-bb/examples
+          cd faas-bb
           git checkout ${{ github.head_ref || github.ref_name }}
+          cd examples
           faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }}
           faas build
           if [ "$(echo world | docker run -i ghcr.io/${{ github.repository_owner }}/bb-hello:latest ./index.clj)" != "Hello, world" ]; then

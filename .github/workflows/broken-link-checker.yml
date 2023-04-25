@@ -17,4 +17,9 @@ jobs:
       - name: Asciidoc-link-checker
         run: npm install -g @oasp/asciidoc-link-checker
       - name: Run asciidoc-link-check
-        run: linkchecker .
+        run: |
+          git clone https://github.com/${{ github.repository_owner }}/faas-bb.git
+          cd faas-bb
+          git checkout ${{ github.head_ref || github.ref_name }}
+          cd examples
+          linkchecker ./
