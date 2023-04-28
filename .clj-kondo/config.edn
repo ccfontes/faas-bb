@@ -1,0 +1,2 @@
+{:linters
+  {:redefined-var {:level :off}}}
