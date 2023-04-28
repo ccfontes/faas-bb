@@ -2,4 +2,4 @@
   {:redefined-var {:level :off}
    :duplicate-require {:level :off}
    :namespace-mismatch {:level :off}
-   :namespaces {:disabled-warnings [:mismatched-file]}}}
+   :exclude-namespaces ["function.handler"]}}
