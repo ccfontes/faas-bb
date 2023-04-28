@@ -19,15 +19,19 @@ jobs:
           mkdir test
           cd test
           faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }} 
-          faas new --lang bb-streaming my-bb-function --prefix ghcr.io/${{ github.repository_owner }}
-          faas build -f my-bb-function.yml
-          if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj)" != "Hello world" ]; then
+          faas new --lang bb-streaming my-bb-streaming-function --prefix ghcr.io/${{ github.repository_owner }}
+          faas build -f my-bb-streaming-function.yml
+          if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-streaming-function:latest ./index.clj)" != "Hello world" ]; then
             exit 1
           fi
-          docker stop my-bb-function || exit 0
-          docker rm my-bb-function || exit 0
-          docker run -d --name my-bb-function ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj
-          docker exec my-bb-function curl -X POST --data-raw "Hello world" --retry 20 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082
+          faas new --lang bb my-bb-http-function --prefix ghcr.io/${{ github.repository_owner }}
+          (docker stop my-bb-http-function || exit 0)
+          (docker rm my-bb-http-function || exit 0)
+          faas build -f my-bb-http-function.yml
+          docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest ./index.clj
+          if [ "$(docker exec my-bb-http-function curl -X POST --data-raw "Hello world" --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello world" ]; then
+            exit 2
+          fi
       - name: Build provided Function examples and invoke them
         env:
           DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
@@ -48,3 +52,9 @@ jobs:
               exit 3
           fi
           docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest function/handler-test.clj
+          (docker stop bb-http-hello || exit 0)
+          (docker rm bb-http-hello || exit 0)
+          docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest ./index.clj
+          if [ "$(docker exec bb-http-hello curl -X POST --data-raw "world" --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello, world" ]; then
+            exit 5
+          fi
