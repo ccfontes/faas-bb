@@ -23,8 +23,5 @@ COPY function function
 
 RUN bb prepare
 
-ENV mode="http"
-ENV upstream_url="http://127.0.0.1:8082"
-
 HEALTHCHECK --interval=2s CMD [ -e /tmp/.lock ] || exit 1
 CMD ["fwatchdog"]

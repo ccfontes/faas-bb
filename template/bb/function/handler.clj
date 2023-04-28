@@ -1,3 +1,4 @@
 (ns function.handler)
 
-(defn handler [s] s)
+(defn handler [{:keys [body]}]
+  {:body body})

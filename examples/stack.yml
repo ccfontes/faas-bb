@@ -3,11 +3,15 @@ provider:
   name: openfaas
   gateway: http://127.0.0.1:8080
 functions:
-  bb-hello:
+  bb-streaming-hello:
+    lang: bb-streaming
+    handler: ./streaming/bb-hello
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-streaming-hello
+  bb-streaming-lib:
+    lang: bb-streaming
+    handler: ./streaming/bb-lib
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-streaming-lib
+  bb-http-hello:
     lang: bb
-    handler: ./bb-hello
-    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-hello
-  bb-lib:
-    lang: bb
-    handler: ./bb-lib
-    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-lib
+    handler: ./http/bb-hello
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-hello

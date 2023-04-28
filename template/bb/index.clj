@@ -1,16 +1,11 @@
 #!/usr/bin/env bb
 
-(require '[function.handler :as function])
+(require
+  '[function.handler :as function]
+  '[org.httpkit.server :refer [run-server]])
 
-(defn read-lines
-  ([] (read-lines ""))
-  ([acc] (if-let [line (read-line)]
-           (recur (str acc line))
-           acc)))
+(run-server
+  function/handler
+  {:ip "127.0.0.1" :port 8082})
 
-(defn main []
-  (let [input (read-lines)
-        output (function/handler input)]
-    (println output)))
-
-(main)
+@(promise)
