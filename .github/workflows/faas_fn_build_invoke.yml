@@ -24,10 +24,10 @@ jobs:
           if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj)" != "Hello world" ]; then
             exit 1
           fi
-          docker run -d --name my-bb-function4 ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj
-          docker exec my-bb-function5 curl -X POST --data-raw "Hello world" --retry 20 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082
-          docker stop my-bb-function5
-          docker rm my-bb-function5
+          docker stop my-bb-function || exit 0
+          docker rm my-bb-function || exit 0
+          docker run -d --name my-bb-function ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj
+          docker exec my-bb-function curl -X POST --data-raw "Hello world" --retry 20 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082
       - name: Build provided Function examples and invoke them
         env:
           DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
