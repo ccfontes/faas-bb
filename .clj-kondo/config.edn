@@ -1,2 +1,3 @@
 {:linters
-  {:redefined-var {:level :off}}}
+  {:redefined-var {:level :off}
+   :duplicate-require {:level :off}}}
