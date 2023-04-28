@@ -1,3 +1,4 @@
 {:linters
   {:redefined-var {:level :off}
-   :duplicate-require {:level :off}}}
+   :duplicate-require {:level :off}
+   :namespace-mismatch {:level :off}}}
