@@ -14,16 +14,18 @@ jobs:
     steps:
       - name: Install OpenFaaS CLI
         run: curl -sSL https://cli.openfaas.com | sudo -E sh
-      - name: Build Function from scratch and invoke it
+      - name: Build a Function for each language from scratch and invoke it
         run: |
           mkdir test
           cd test
           faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }} 
-          faas new --lang bb my-bb-function --prefix ghcr.io/${{ github.repository_owner }}
+          faas new --lang bb-streaming my-bb-function --prefix ghcr.io/${{ github.repository_owner }}
           faas build -f my-bb-function.yml
           if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj)" != "Hello world" ]; then
             exit 1
           fi
+          docker run -i -p 8082:8082 ghcr.io/${{ github.repository_owner }}/my-bb-function:latest ./index.clj &
+          curl -X POST --data-raw "Hello world" http://0.0.0.1:8082
       - name: Build provided Function examples and invoke them
         env:
           DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
@@ -34,13 +36,13 @@ jobs:
           cd examples
           faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }}
           faas build
-          if [ "$(echo world | docker run -i ghcr.io/${{ github.repository_owner }}/bb-hello:latest ./index.clj)" != "Hello, world" ]; then
+          if [ "$(echo world | docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-hello:latest ./index.clj)" != "Hello, world" ]; then
               exit 1
           fi
-          if [ "$(echo '{"a" {"b" 10}}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-lib:latest ./index.clj)" != "[10]" ]; then
+          if [ "$(echo '{"a" {"b" 10}}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest ./index.clj)" != "[10]" ]; then
               exit 2
           fi
-          if [ -n "$(echo '{"a" 10}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-lib:latest ./index.clj)" ]; then
+          if [ -n "$(echo '{"a" 10}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest ./index.clj)" ]; then
               exit 3
           fi
-          docker run -i ghcr.io/${{ github.repository_owner }}/bb-lib:latest function/handler-test.clj
+          docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest function/handler-test.clj
