@@ -1,0 +1,4 @@
+{:linters
+  {:redefined-var {:level :off}
+   :duplicate-require {:level :off}
+   :namespace-name-mismatch {:level :off}}}

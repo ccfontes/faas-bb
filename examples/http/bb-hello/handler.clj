@@ -1,4 +1,4 @@
 (ns function.handler)
 
 (defn handler [{:keys [body]}]
-  {:body body})
+  {:body (str "Hello, " (slurp body))})

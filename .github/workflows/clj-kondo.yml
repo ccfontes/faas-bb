@@ -18,5 +18,6 @@ jobs:
     - uses: nnichols/clojure-lint-action@v2
       with:
         pattern: "*.clj"
+        fail_on_error: true
         github_token: ${{ secrets.github_token }}
         reporter: github-pr-review

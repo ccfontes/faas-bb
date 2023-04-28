@@ -1,8 +1,6 @@
 = OpenFaaS Functions in Babashka =
 
-Hello world OpenFaaS Function in Babashka.
-
-See the `bb-` prefixed directories to find the Babashka Function code examples.
+Go into the link:bb[bb] and link:bb-streaming[bb-streaming] directories to find the Babashka Function code examples.
 
 The following documentation explains how to run these Functions in OpenFaaS.
 
