@@ -52,9 +52,13 @@ jobs:
               exit 3
           fi
           docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest function/handler-test.clj
-          (docker stop bb-http-hello || exit 0)
-          (docker rm bb-http-hello || exit 0)
-          docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest ./index.clj
-          if [ "$(docker exec bb-http-hello curl -X POST --data-raw "world" --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello, world" ]; then
+          (docker stop bb-http || exit 0)
+          (docker rm bb-http || exit 0)
+          docker run -d --name bb-http ghcr.io/${{ github.repository_owner }}/bb-http:latest ./index.clj
+          if [ "$(docker exec bb-http curl -X POST --data-raw "world" --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello, world" ]; then
             exit 5
           fi
+          # 1. one arg: text -> text, string with environment var
+          # 2. two args: json -> json, update map with header
+          #   2.1. keywords=false
+          #   2.2. keywords=true

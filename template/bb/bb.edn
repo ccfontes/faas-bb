@@ -1,0 +1,4 @@
+{:paths ["."]
+ :deps {eg/eg {:mvn/version "0.5.6-alpha"}
+        tortue/spy {:mvn/version "2.14.0"}
+        plumula/mimolette {:mvn/version "0.2.1"}}}
