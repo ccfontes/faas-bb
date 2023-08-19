@@ -1,7 +1,6 @@
 (ns ring.middleware.json
   "Ring middleware for parsing JSON requests and generating JSON responses."
-  (:require [cheshire.core :as json]
-            [clojure.java.io :as io])
+  (:require [cheshire.core :as json])
   (:import [java.io InputStream]))
 
 (def ^{:doc "HTTP token: 1*<any CHAR except CTLs or tspecials>. See RFC2068"}
@@ -44,18 +43,18 @@
   (header resp "Content-Type" content-type))
 
 (defn- json-request? [request]
-  (if-let [type (get-in request [:headers "content-type"])]
-    (not (empty? (re-find #"^application/(.+\+)?json" type)))))
+  (when-let [type (get-in request [:headers "content-type"])]
+    (seq (re-find #"^application/(.+\+)?json" type))))
 
 (defn- read-json [request & [{:keys [keywords? key-fn]}]]
-  (if (json-request? request)
-    (if-let [^InputStream body (:body request)]
+  (when (json-request? request)
+    (when-let [^InputStream body (:body request)]
       (let [^String encoding (or (character-encoding request)
                                  "UTF-8")
             body-reader (java.io.InputStreamReader. body encoding)]
         (try
           [true (json/parse-stream body-reader (or key-fn keywords?))]
-          (catch Exception ex
+          (catch Exception _
             (println "Error parsing json stream")
             [false nil]))))))
 
@@ -70,7 +69,7 @@
   if the JSON is malformed. See: wrap-json-body."
   [request options]
   (if-let [[valid? json] (read-json request options)]
-    (if valid? (assoc request :body json))
+    (when valid? (assoc request :body json))
     request))
 
 (defn wrap-json-body

@@ -1,79 +1,53 @@
 (ns tests
   (:require
     [index]
-    [clojure.test :refer [deftest is run-tests]]
-    [clojure.spec.alpha :as spec]
-    [clojure.spec.test.alpha :as spec-test]
-    [eg :refer [eg]]
-    [plumula.mimolette.alpha :refer [defspec-test]]))
+    [clojure.test :refer [run-tests]]
+    [eg :refer [eg]]))
 
-;(deftest foo-test
-;  (is (= )))
-;(spec/def ::keywords? (nilable #{true false}))
-;(spec/def ::response (map-of keyword? string?))
-; fn-arg-cnt:  (-> #'function/handler (meta) :arglists (first) (count))
-
-(spec/def :str/headers (spec/map-of string? string?))
-(eg :str/headers {"foo" "bar"})
-(spec/def :edn/headers (spec/map-of keyword? any?))
-(eg :edn/headers {:foo 3})
-
-(spec/def ::body (spec/map-of (spec/or :kw keyword? :str string?) any?))
-(eg ::body {"foo" "bar"})
-(eg ::body {:foo "bar"})
-
-(spec/def :str/env (spec/map-of string? string?))
-(eg :str/env {"foo" "bar"})
-(spec/def :edn/env (spec/map-of keyword? any?))
-(eg :edn/env {:foo "bar"})
-
-(spec/def ::request (spec/keys :req-un [:str/headers ::body]))
-(eg ::request {:headers {"foo" "bar"}
-               :body {"foo" "bar"}})
-
-(spec/def ::response (spec/keys :req-un [:kw/headers ::body]))
-(eg ::response {:headers {:foo "bar"}
-                :body {:foo "bar"}})
-
-(spec/def ::handler #{identity #(conj [%1] %2)})
-
-(spec/fdef index/read-string
-  :args (spec/cat :str string?)
-  :ret any?)
-
-(spec/fdef index/keywords?
-  :args (spec/cat :str (spec/nilable #{"true" "false"}))
-  :ret boolean?)
+(eg index/keywords?
+  "true"  => true
+  "false" => false
+  nil     => true)
 
 (eg index/read-string
   "0A" => "0A"
-  "0"  => 0)
+  "0"  => 0
+  "abc" => string?)
 
-(spec/fdef index/->kebab-case
-  :args (spec/cat :str string?)
-  :ret string?)
+(eg index/->kebab-case
+  ""        => ""
+  "Boo_baR" => "boo-bar")
 
-(spec/fdef index/format-context
-  :args (spec/cat :context-map (spec/map-of string? string?))
-  :ret (spec/map-of keyword? any?))
+(eg index/format-context
+  {} => {}
+  {"Foo_baR" "false"} => {:foo-bar false})
 
-(spec/fdef index/->context
-  :args (spec/cat :request :str/headers
-                  :env :edn/env)
-  :ret (spec/keys :req-un [:edn/headers :edn/env]))
+(eg index/->context
+  [{} {}] => {:headers {} :env {}}
+  [{"Foo_baR" "[]"} {"eggs" "4.3"}] => {:headers {:foo-bar []}
+                                        :env {:eggs 4.3}})
 
-(spec/fdef index/->handler
-  :args (spec/cat :fn ::handler
-                  :env :str/env)
-  :ret fn?)
+(defn arity-2-handler [{:keys [bar] :as a} {:keys [headers env]}]
+  [bar (get headers :content-type) (:my-env env)])
 
-(spec/fdef index/->app
-  :args (spec/cat :fn ::handler
-                  :env :str/env)
-  :ret fn?)
+(def handler (index/->handler (var arity-2-handler) {"my-env" "env-val"}))
 
-; ring tests
+(eg handler
+  {:headers {} :body {}} => {:body [nil nil "env-val"] :status 200}
+  {:headers {"content-type" "application/json"}, :body {:bar "foo"}} => {:body ["foo" "application/json" "env-val"] :status 200})
 
-(defspec-test spec-check-index (spec-test/enumerate-namespace 'index))
+(def app (index/->app (var arity-2-handler) {"MY_ENV" "env-val"}))
 
-(clojure.test/run-tests 'tests)
+(def str->stream #(-> % (.getBytes "UTF-8") (java.io.ByteArrayInputStream.)))
+
+(def resp-fixture {:headers {"Content-Type" "application/json; charset=utf-8"}
+                   :body "[\"spam\",\"application/json\",\"env-val\"]"
+                   :status 200})
+
+(eg app
+  {:headers {"content-type" "application/json"}, :body (str->stream "{\"bar\": \"spam\"}")} => resp-fixture)
+
+; TODO check examples of ring apps
+
+(defn -main []
+  (run-tests 'tests))
