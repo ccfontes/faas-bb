@@ -72,6 +72,7 @@ jobs:
 
           (docker stop bb-http-map-context || exit 0)
           (docker rm bb-http-map-context || exit 0)
+          sleep 20
           docker run -d --name bb-http-map-context ghcr.io/${{ github.repository_owner }}/bb-http-map-context:latest bb --main index
           if [ "$(docker exec bb-http-map-context curl -X POST -d '{"foo": "bar", "spam": "eggs"}' -H 'Content-Type: application/json' --retry 20 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"],"application/json",true]' ]; then
             exit 7
