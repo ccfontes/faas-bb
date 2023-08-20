@@ -1,18 +1,16 @@
 (ns index
   (:require
-    [function.handler :as function]
-    [org.httpkit.server :refer [run-server]]
-    [ring.middleware.json :as json-middleware]
     [clojure.walk :refer [keywordize-keys]]
     [clojure.string :as str :refer [lower-case]]
-    [clojure.edn :as edn]))
+    [clojure.edn :as edn]
+    [org.httpkit.server :refer [run-server]]
+    [ring.middleware.json :as json-middleware]
+    [function.handler :as function]))
 
 (defn read-string [s]
   (try
     (let [res (edn/read-string s)]
-      (if (symbol? res)
-        (str res)
-        res))
+      (if (symbol? res) (str res) res))
     (catch Exception _
       s)))
 
@@ -39,14 +37,12 @@
 (def response {:status 200})
 
 (defn ->handler [f-var env]
-  (fn [request]
-    (let [f (var-get f-var)
-          faas-fn (case (fn-arg-cnt f-var)
-                    1 (comp f :body)
-                    2 #(f (:body %) (->context (:headers %) env)))]
-      ; TODO replace {} with request, but need to remove troublesome keys
-      (merge (assoc {} :body (faas-fn request))
-             response))))
+  (let [f (var-get f-var)
+        faas-fn (case (fn-arg-cnt f-var)
+                  1 (comp f :body)
+                  2 #(f (:body %) (->context (:headers %) env)))]
+    (fn [request]
+      (merge {:body (faas-fn request)} response))))
 
 (defn ->app [f-var env]
   (-> (->handler f-var env)
@@ -57,3 +53,8 @@
   (run-server (->app #'function/handler (System/getenv))
               {:port 8082})
   @(promise))
+
+; TODO:
+; e2e tests in CI
+; insert aknowledgement in the ring-json middleware
+; template pull e2e test

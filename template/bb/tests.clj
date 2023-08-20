@@ -1,8 +1,8 @@
 (ns tests
   (:require
-    [index]
     [clojure.test :refer [run-tests]]
-    [eg :refer [eg]]))
+    [eg :refer [eg]]
+    [index]))
 
 (eg index/keywords?
   "true"  => true
@@ -16,7 +16,7 @@
 
 (eg index/->kebab-case
   ""        => ""
-  "Boo_baR" => "boo-bar")
+  "Boo_baR" => "bo-bar")
 
 (eg index/format-context
   {} => {}
@@ -27,7 +27,7 @@
   [{"Foo_baR" "[]"} {"eggs" "4.3"}] => {:headers {:foo-bar []}
                                         :env {:eggs 4.3}})
 
-(defn arity-2-handler [{:keys [bar] :as a} {:keys [headers env]}]
+(defn arity-2-handler [{:keys [bar]} {:keys [headers env]}]
   [bar (get headers :content-type) (:my-env env)])
 
 (def handler (index/->handler (var arity-2-handler) {"my-env" "env-val"}))
@@ -47,7 +47,6 @@
 (eg app
   {:headers {"content-type" "application/json"}, :body (str->stream "{\"bar\": \"spam\"}")} => resp-fixture)
 
-; TODO check examples of ring apps
-
-(defn -main []
-  (run-tests 'tests))
+(let [{:keys [fail error]} (run-tests 'tests)]
+  (when (pos? (+ fail error))
+    (System/exit 1)))
