@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 18
       - name: Asciidoc-link-checker
-        run: npm install -g asciidoc-link-check
+        run: npm install -g asciidoc-link-check1.0.15
       - name: Run asciidoc-link-check
         run: |
           git clone https://github.com/${{ github.repository_owner }}/faas-bb.git

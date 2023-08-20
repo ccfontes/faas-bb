@@ -56,6 +56,3 @@
   (run-server (->app #'function/handler (System/getenv))
               {:port 8082})
   @(promise))
-
-; TODO:
-; manually template pull e2e test

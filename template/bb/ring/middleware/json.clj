@@ -1,9 +1,9 @@
 (ns ring.middleware.json
-    ^{:author "James Reeves"
-      :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-      :url "https://github.com/ring-clojure/ring-json"
-      :license {:name "Distributed under the MIT License, the same as Ring."}}
   "Ring middleware for parsing JSON requests and generating JSON responses."
+  ^{:author "James Reeves"
+    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+    :url "https://github.com/ring-clojure/ring-json"
+    :license {:name "Distributed under the MIT License, the same as Ring."}}
   (:require [cheshire.core :as json])
   (:import [java.io InputStream]))
 

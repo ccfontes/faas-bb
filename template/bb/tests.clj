@@ -30,12 +30,20 @@
   [{"Foo_baR" "[]"} {"eggs" "4.3"}] => {:headers {:foo-bar []}
                                         :env {:eggs 4.3}})
 
+(defn arity-1-handler [content]
+  [(keys content) (vals content)])
+
 (defn arity-2-handler [{:keys [bar]} {:keys [headers env]}]
   [bar (get headers :content-type) (:my-env env)])
 
-(def handler (index/->handler (var arity-2-handler) {"my-env" "env-val"}))
+(def handler-arity1 (index/->handler (var arity-1-handler) {}))
+(def handler-arity2 (index/->handler (var arity-2-handler) {"my-env" "env-val"}))
 
-(eg handler
+(eg handler-arity1
+  {:headers {} :body {}} => {:body [nil nil] :status 200}
+  {:headers {"content-type" "application/json"}, :body {:bar "foo"}} => {:body ['(:bar) '("foo")] :status 200})
+
+(eg handler-arity2
   {:headers {} :body {}} => {:body [nil nil "env-val"] :status 200}
   {:headers {"content-type" "application/json"}, :body {:bar "foo"}} => {:body ["foo" "application/json" "env-val"] :status 200})
 
