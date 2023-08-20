@@ -28,13 +28,12 @@ jobs:
 
           faas new --lang bb my-bb-http-function --prefix ghcr.io/${{ github.repository_owner }}
           faas build -f my-bb-http-function.yml
-          (docker stop my-bb-http-function || exit 0)
-          (docker rm my-bb-http-function || exit 0)
           docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest bb --main index
           if [ "$(docker exec my-bb-http-function curl -X POST --data-raw "Hello world" --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello world" ]; then
             exit 2
           fi
-          docker logs my-bb-http-function
+          (docker stop my-bb-http-function || exit 0)
+          (docker rm my-bb-http-function || exit 0)
       - name: Build provided Function examples and invoke them
         env:
           DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
@@ -60,18 +59,16 @@ jobs:
 
           docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest function/handler-test.clj
 
-          (docker stop bb-http-map || exit 0)
-          (docker rm bb-http-map || exit 0)
           docker run -d --name bb-http-map ghcr.io/${{ github.repository_owner }}/bb-http-map:latest bb --main index
-          docker logs bb-http-map
           if [ "$(docker exec bb-http-map curl -X POST --data '{"foo": "bar", "spam": "eggs"}' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"]]' ]; then
             exit 6
           fi
+          (docker stop bb-http-map || exit 0)
+          (docker rm bb-http-map || exit 0)
 
-          (docker stop bb-http-map-context || exit 0)
-          (docker rm bb-http-map-context || exit 0)
           docker run -d --name bb-http-map-context ghcr.io/${{ github.repository_owner }}/bb-http-map-context:latest bb --main index
-          docker logs bb-http-map-context
           if [ "$(docker exec bb-http-map-context curl -X POST --data '{"foo": "bar", "spam": "eggs"}' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"],"application/json",true]' ]; then
             exit 7
           fi
+          (docker stop bb-http-map-context || exit 0)
+          (docker rm bb-http-map-context || exit 0)
