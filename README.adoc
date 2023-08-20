@@ -66,7 +66,7 @@ Defining `handler` with two arguments containing the request payload and context
 ----
 This works for `bb` language only.
 
-The request `context` will contain a map of `:headers` and `:env` keys.
+The `context` will contain a map of `:headers` and `:env` keys.
 
 The `:headers` key will contain a map of the request headers, as such:
 [source, clojure]

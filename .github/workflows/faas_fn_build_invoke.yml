@@ -34,6 +34,7 @@ jobs:
           if [ "$(docker exec my-bb-http-function curl -X POST --data-raw "Hello world" --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello world" ]; then
             exit 2
           fi
+          docker logs my-bb-http-function
       - name: Build provided Function examples and invoke them
         env:
           DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
@@ -65,6 +66,7 @@ jobs:
           if [ "$(docker exec bb-http-map curl -X POST --data-raw '{"foo": "bar", "spam": "eggs"}' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"]]' ]; then
             exit 6
           fi
+          docker logs bb-http-map
 
           (docker stop bb-http-map-context || exit 0)
           (docker rm bb-http-map-context || exit 0)
@@ -72,3 +74,4 @@ jobs:
           if [ "$(docker exec bb-http-map-context curl -X POST --data-raw '{"foo": "bar", "spam": "eggs"}' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"],"application/json",true]' ]; then
             exit 7
           fi
+          docker logs bb-http-map-context
