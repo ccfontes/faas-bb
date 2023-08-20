@@ -9,13 +9,7 @@
 :url-ci-status-lychee-link: "{url-proj}/actions/workflows/broken-link-checker.yml"
 :img-license: https://img.shields.io/badge/license-MIT-black.svg
 
-= OpenFaaS Babashka template
-
-image:{img-ci-tests-status}[link={url-ci-status-tests}]
-image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}]
-image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}]
-image:{img-ci-lychee-link-check-status}[link={url-ci-status-lychee-link}]
-image:{img-license}[link=LICENSE]
+= faas-bb image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}] image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}] image:{img-ci-lychee-link-check-status}[link={url-ci-status-lychee-link}] image:{img-license}[link=LICENSE]
 
 An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://github.com/babashka/babashka[Babashka].
 
@@ -136,8 +130,12 @@ Contributions are welcome! If you find a bug or have an idea for a new feature, 
 
 The template may benefit from some common middleware functions, such as those offered in the https://github.com/ring-clojure/ring-defaults/blob/master/src/ring/middleware/defaults.clj[ring-defaults library]. Users are welcome to recommend integrating any middleware they think would be useful for handling common web application needs.
 
+== Third party code
+
+link:template/bb/ring/middleware/json.clj[ring.middleware.json] is derived from https://github.com/ring-clojure/ring-json/blob/master/src/ring/middleware/json.clj[ring-son] to work with Babashka, originally authored by James Reeves and used under the MIT license.
+
 == link:LICENSE[License]
 
-Copyright (c) 2023 Carlos da Cunha Fontes
+Copyright (c) 2023 Carlos da Cunha Fontes.
 
-The MIT License
+This project is licensed under the MIT License. See link:LICENSE[LICENSE] for details.

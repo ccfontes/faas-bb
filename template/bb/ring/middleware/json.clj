@@ -1,4 +1,8 @@
 (ns ring.middleware.json
+    ^{:author "James Reeves"
+      :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+      :url "https://github.com/ring-clojure/ring-json"
+      :license {:name "Distributed under the MIT License, the same as Ring."}}
   "Ring middleware for parsing JSON requests and generating JSON responses."
   (:require [cheshire.core :as json])
   (:import [java.io InputStream]))
@@ -110,7 +114,7 @@
   JSON is malformed. See: wrap-json-params."
   [request options]
   (if-let [[valid? json] (read-json request options)]
-    (if valid? (assoc-json-params request json))
+    (when valid? (assoc-json-params request json))
     request))
 
 (defn wrap-json-params

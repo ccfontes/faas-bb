@@ -1,4 +1,7 @@
-(ns index
+(ns index ^{:author "Carlos da Cunha Fontes"
+            :url "https://github.com/ccfontes/faas-bb"
+            :license {:name "Distributed under the MIT License"
+                      :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
   (:require
     [clojure.walk :refer [keywordize-keys]]
     [clojure.string :as str :refer [lower-case]]
@@ -55,6 +58,4 @@
   @(promise))
 
 ; TODO:
-; e2e tests in CI
-; insert aknowledgement in the ring-json middleware
-; template pull e2e test
+; manually template pull e2e test
