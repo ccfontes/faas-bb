@@ -1,4 +1,4 @@
 (ns function.handler)
 
 (defn handler [content]
-  content)
+  [(keys content) (vals content)])

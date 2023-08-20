@@ -15,3 +15,15 @@ functions:
     lang: bb
     handler: ./http/bb-hello
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-hello
+  bb-http-map:
+    lang: bb
+    handler: ./http/bb-map
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-map
+    environment:
+      keywords: false
+  bb-http-map-context:
+    lang: bb
+    handler: ./http/bb-map-context
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-map-context
+    environment:
+      keywords: true

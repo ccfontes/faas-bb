@@ -1,4 +1,4 @@
 language: bb
-fprocess: ./index.clj
+fprocess: bb --main index
 welcome_message: |
-  You have created a new Function which uses Babashka
+  You have created a new HTTP Function which uses Babashka

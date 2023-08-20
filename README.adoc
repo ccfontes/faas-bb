@@ -9,23 +9,17 @@
 :url-ci-status-lychee-link: "{url-proj}/actions/workflows/broken-link-checker.yml"
 :img-license: https://img.shields.io/badge/license-MIT-black.svg
 
-= OpenFaaS Babashka template =
-
-image:{img-ci-tests-status}[link={url-ci-status-tests}]
-image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}]
-image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}]
-image:{img-ci-lychee-link-check-status}[link={url-ci-status-lychee-link}]
-image:{img-license}[link=LICENSE]
+= faas-bb image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}] image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}] image:{img-ci-lychee-link-check-status}[link={url-ci-status-lychee-link}] image:{img-license}[link=LICENSE]
 
 An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://github.com/babashka/babashka[Babashka].
 
-== Prerequisites ==
+== Prerequisites
 
 * https://docs.openfaas.com/cli/install/[OpenFaaS CLI]: makes the `faas` command available.
 
-== Usage ==
+== Usage
 
-=== Pull OpenFaaS template ===
+=== Pull OpenFaaS template
 
 To create Babashka Functions with this template, use the following command *once*:
 [source, bash]
@@ -34,7 +28,7 @@ faas template pull https://github.com/ccfontes/faas-bb
 ----
 If you ever need to update the template, simply run the command above with the `--overwrite` flag.
 
-=== Create a Babashka Function ===
+=== Create a Babashka Function
 
 Two languages are supported: `bb` (HTTP mode) and `bb-streaming`.
 
@@ -43,25 +37,105 @@ Create Babashka Functions as with the following command example:
 ----
 faas new --lang bb my-bb-function
 ----
-`of-watchdog` mode is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
+`of-watchdog` mode here is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
 
 * a `function.handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
 * a `bb.edn` file specifying classpath to find `function.handler`.
 
-== link:examples[Function examples] ==
+Although the Function namespace is called `function.handler`, the files themselves can be named anything you want. Example:
+[source, yml]
+----
+my-function:
+  handler: ./anything/my-function
+  ...
+---- 
+
+The `handler` function can be defined with one or two arguments.
+
+Defining `handler` with one argument containing the request payload:
+[source, clojure]
+----
+This works for both `bb` and `bb-streaming` languages.
+
+(defn handler [payload] ...)
+----
+Defining `handler` with two arguments containing the request payload and context: 
+[source, clojure]
+----
+(defn handler [payload context] ...)
+----
+This works for `bb` language only.
+
+The `context` will contain a map of `:headers` and `:env` keys.
+
+The `:headers` key will contain a map of the request headers, as such:
+[source, clojure]
+----
+{:content-type "application/json"}
+----
+
+The `:env` map contains a map with the environment variables. Additional environment variables can be defined in the `stack.yml` file, as such:
+[source, yml]
+----
+my-function:
+  lang: bb
+  handler: ./anything/my-function
+  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
+  environment:
+    MY_ENV1: foo
+    MY_ENV2: 2
+----
+The `:env` key will contain:
+[source, clojure]
+----
+ {:my-env1 "foo"
+  :my-env2 2}
+----
+
+When passing a JSON payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where string keys are preferable, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
+[source, yml]
+----
+my-function:
+  lang: bb
+  handler: ./anything/my-function
+  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
+  environment:
+    keywords: false
+----
+
+
+== link:examples[Function examples]
 
 See the link:examples[examples] directory to find a fully working set of OpenFaaS Functions written in Babashka.
 
-== Tests ==
+== Tests
 
-Tests run in CI with Github Actions. Some commands link:.github/workflows/faas_fn_build_invoke.yml[can be found in a Github Actions workflow] to help you with testing your changes before pushing them to a topic branch.
+=== CI tests
 
-== Contributing ==
+All tests run in CI with Github Actions. Some commands link:.github/workflows/faas_fn_build_invoke.yml[can be found in a Github Actions workflow] to help you with testing your changes before pushing them to a topic branch.
+
+=== Unit tests
+
+Run locally the unit tests for `bb` language:
+[source, bash]
+----
+cd template/bb
+bb tests.clj
+----
+`tests.clj` is included with the template so you can test any changes you make to the template before using it.
+
+== Contributing
 
 Contributions are welcome! If you find a bug or have an idea for a new feature, please open an issue or submit a pull request.
 
-== link:LICENSE[License] ==
+The template may benefit from some common middleware functions, such as those offered in the https://github.com/ring-clojure/ring-defaults/blob/master/src/ring/middleware/defaults.clj[ring-defaults library]. Users are welcome to recommend integrating any middleware they think would be useful for handling common web application needs.
 
-Copyright (c) 2023 Carlos da Cunha Fontes
+== Third party code
 
-The MIT License
+link:template/bb/ring/middleware/json.clj[ring.middleware.json] is derived from https://github.com/ring-clojure/ring-json/blob/master/src/ring/middleware/json.clj[ring-son] to work with Babashka, originally authored by James Reeves and used under the MIT license.
+
+== link:LICENSE[License]
+
+Copyright (c) 2023 Carlos da Cunha Fontes.
+
+This project is licensed under the MIT License. See link:LICENSE[LICENSE] for details.
