@@ -30,6 +30,7 @@ jobs:
           faas build -f my-bb-http-function.yml
           (docker stop my-bb-http-function || exit 0)
           (docker rm my-bb-http-function || exit 0)
+          sleep 10
           docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest bb --main index
           if [ "$(docker exec my-bb-http-function curl -X POST --data-raw "Hello world" --retry 6 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello world" ]; then
             exit 2
@@ -63,6 +64,7 @@ jobs:
 
           (docker stop bb-http-map || exit 0)
           (docker rm bb-http-map || exit 0)
+          sleep 10
           docker run -d --name bb-http-map ghcr.io/${{ github.repository_owner }}/bb-http-map:latest bb --main index
           if [ "$(docker exec bb-http-map curl -X POST --data '{"foo": "bar", "spam": "eggs"}' --retry 6 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"]]' ]; then
             exit 6
@@ -72,6 +74,7 @@ jobs:
 
           (docker stop bb-http-map-context || exit 0)
           (docker rm bb-http-map-context || exit 0)
+          sleep 10
           docker run -d --name bb-http-map-context ghcr.io/${{ github.repository_owner }}/bb-http-map-context:latest bb --main index
           if [ "$(docker exec bb-http-map-context curl -X POST --data '{"foo": "bar", "spam": "eggs"}' --retry 6 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"],"application/json",true]' ]; then
             exit 7
