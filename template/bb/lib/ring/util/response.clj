@@ -87,7 +87,7 @@
 
 (defn- canonical-path ^String [^File file]
   (str (.getCanonicalPath file)
-       (if (.isDirectory file) File/separatorChar)))
+       (when (.isDirectory file) File/separatorChar)))
 
 (defn- safe-path? [^String root ^String path]
   (.startsWith (canonical-path (File. root path))
@@ -173,7 +173,7 @@
 ;; As a work-around, we'll backport the fix from CLJ-1177 into
 ;; url-as-file.
 
-(defn- ^File url-as-file [^java.net.URL u]
+(defn- url-as-file ^File [^java.net.URL u]
   (-> (.getFile u)
       (str/replace \/ File/separatorChar)
       (str/replace "+" (URLEncoder/encode "+" "UTF-8"))

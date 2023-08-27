@@ -55,19 +55,20 @@ my-function:
 In `bb` language:
 [source, clojure]
 ----
-(defn handler [{:keys [headers body context] :as event}] ...)
+(defn handler [{:keys [headers body context] :as event}]
+  ...)
 ----
-The `event` is a map containing the request `:headers`, `:body` and `:context` keys.
+`event` is a map containing `:headers`, `:body` and `:context` keys.
 
-`context` contains a map of environment variables.
-
-The `:headers` key contains headers, as such:
+`:headers` contains headers, as such:
 [source, clojure]
 ----
 {:content-type "application/json"}
 ----
 
-The `:env` map contains a map with the environment variables. Additional environment variables can be defined in the `stack.yml` file, as such:
+`:body` is the payload body.
+
+`:context` contains environment variables. Additional environment variables can be defined in the `stack.yml` file, as such:
 [source, yml]
 ----
 my-function:
@@ -78,14 +79,14 @@ my-function:
     MY_ENV1: foo
     MY_ENV2: 2
 ----
-The `:env` key will contain:
+`:context` will contain:
 [source, clojure]
 ----
  {:my-env1 "foo"
   :my-env2 2}
 ----
 
-There are cases where string keys are preferable in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
+There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
 [source, yml]
 ----
 my-function:
