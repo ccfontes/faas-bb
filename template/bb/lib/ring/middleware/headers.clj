@@ -1,4 +1,8 @@
 (ns ring.middleware.headers
+  ^{:author "Carlos da Cunha Fontes"
+    :url "https://github.com/ccfontes/faas-bb"
+    :license {:name "Distributed under the MIT License"
+              :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
   (:require [clojure.walk :refer [keywordize-keys stringify-keys]]
             [ring.util.walk :as ring-walk]))
 

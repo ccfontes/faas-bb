@@ -48,27 +48,20 @@ Although the Function namespace is called `function.handler`, the files themselv
 my-function:
   handler: ./anything/my-function
   ...
----- 
+----
 
-The `handler` function can be defined with one or two arguments.
+=== Defining Function handler
 
-Defining `handler` with one argument containing the request payload:
+In `bb` language:
 [source, clojure]
 ----
-This works for both `bb` and `bb-streaming` languages.
-
-(defn handler [payload] ...)
+(defn handler [{:keys [headers body context] :as event}] ...)
 ----
-Defining `handler` with two arguments containing the request payload and context: 
-[source, clojure]
-----
-(defn handler [payload context] ...)
-----
-This works for `bb` language only.
+The `event` is a map containing the request `:headers`, `:body` and `:context` keys.
 
-The `context` will contain a map of `:headers` and `:env` keys.
+`context` contains a map of environment variables.
 
-The `:headers` key will contain a map of the request headers, as such:
+The `:headers` key contains headers, as such:
 [source, clojure]
 ----
 {:content-type "application/json"}
@@ -92,7 +85,7 @@ The `:env` key will contain:
   :my-env2 2}
 ----
 
-When passing a JSON payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where string keys are preferable, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
+There are cases where string keys are preferable in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
 [source, yml]
 ----
 my-function:
@@ -102,6 +95,13 @@ my-function:
   environment:
     keywords: false
 ----
+
+In `bb-streaming` language:
+[source, clojure]
+----
+(defn handler [event] ...)
+----
+The `event` is the payload body.
 
 
 == link:examples[Function examples]
@@ -135,7 +135,6 @@ The template may benefit from some common middleware functions, such as those of
 The following files are derived from https://github.com/ring-clojure[ring] to work with Babashka, originally authored by James Reeves and contributors, and used under the MIT license:
 
 - link:template/bb/ring/middleware/json.clj[ring.middleware.json]
-- link:template/bb/ring/midleware/head.clj[ring.middleware.head]
 - link:template/bb/ring/util/io.clj[ring.util.io]
 - link:template/bb/ring/util/mime_type.clj[ring.util.mime-type]
 - link:template/bb/ring/util/parsing.clj[ring.util.parsing]

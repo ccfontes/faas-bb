@@ -1,10 +1,10 @@
-(ns ring.util.parsing
-  ^{:author "James Reeves"
-    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-    :url "https://github.com/ring-clojure/ring"
-    :license {:name "Distributed under the MIT License, the same as Ring."}}
+(ns ring.util.parsing)
   "Regular expressions for parsing HTTP.
-  For internal use.")
+  For internal use."
+  ;^{:author "James Reeves"
+  ;  :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+  ;  :url "https://github.com/ring-clojure/ring"
+  ;  :license {:name "Distributed under the MIT License, the same as Ring."}}
 
 (def ^{:doc "HTTP token: 1*<any CHAR except CTLs or tspecials>. See RFC2068"
        :added "1.3"}

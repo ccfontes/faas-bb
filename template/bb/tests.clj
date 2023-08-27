@@ -1,24 +1,31 @@
-(ns tests ^{:author "Carlos da Cunha Fontes"
-            :url "https://github.com/ccfontes/faas-bb"
-            :license {:name "Distributed under the MIT License"
-                      :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
+(ns tests
+  ^{:author "Carlos da Cunha Fontes"
+    :url "https://github.com/ccfontes/faas-bb"
+    :license {:name "Distributed under the MIT License"
+              :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
   (:require
     [clojure.test :refer [run-tests]]
     [eg :refer [eg]]
-    [index]
     [ring.util.walk :as ring-walk]
-    [ring.util.string :as ring-string]))
-
-(def db {:id "1" :name "John Doe"})
+    [ring.util.string :as ring-string]
+    [index]))
 
 (eg ring-string/read-string
   "0A"   => "0A"
   "0"    => 0
   "-1.1" => -1.1
   "true" => true
-  nil    => nil
-  "abc"  => string?
-  ":def" => string?)
+  ""     => nil
+  "abc"  => "abc"
+  ":def" => ":def")
+
+(eg ring-string/write-string
+  -4    => "-4"
+  5.3   => "5.3"
+  false => "false"
+  nil   => ""
+  "asd" => "asd"
+  :qwer => "qwer")
 
 (eg index/keywords?
   true  => true
@@ -32,6 +39,18 @@
 (eg ring-walk/format-context
   {} => {}
   {"Foo_baR" "false"} => {:foo-bar false})
+
+(eg ring-walk/read-val-strings
+  {} => {}
+  {"Foo_baR" "false"} => {"Foo_baR" false})
+
+(eg ring-walk/write-val-strings
+  {} => {}
+  {"Foo_baR" 1} => {"Foo_baR" "1"})
+
+(eg ring-walk/lowerify-keys
+  {} => {}
+  {"Foo-baR" "abc"} => {"foo-bar" "abc"})
 
 (defn user-handler [{:keys [body headers context]}]
   [(:bar body) (or (get headers "content-type") (:content-type headers)) (:my-env context)])

@@ -1,7 +1,8 @@
-(ns index ^{:author "Carlos da Cunha Fontes"
-            :url "https://github.com/ccfontes/faas-bb"
-            :license {:name "Distributed under the MIT License"
-                      :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
+(ns index
+  ^{:author "Carlos da Cunha Fontes"
+    :url "https://github.com/ccfontes/faas-bb"
+    :license {:name "Distributed under the MIT License"
+              :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
   (:require
     [org.httpkit.server :refer [run-server]]
     [ring.middleware.json :refer [wrap-json-body]]
