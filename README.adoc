@@ -132,7 +132,15 @@ The template may benefit from some common middleware functions, such as those of
 
 == Third party code
 
-link:template/bb/ring/middleware/json.clj[ring.middleware.json] is derived from https://github.com/ring-clojure/ring-json/blob/master/src/ring/middleware/json.clj[ring-son] to work with Babashka, originally authored by James Reeves and used under the MIT license.
+The following files are derived from https://github.com/ring-clojure[ring] to work with Babashka, originally authored by James Reeves and contributors, and used under the MIT license:
+
+- link:template/bb/ring/middleware/json.clj[ring.middleware.json]
+- link:template/bb/ring/midleware/head.clj[ring.middleware.head]
+- link:template/bb/ring/util/io.clj[ring.util.io]
+- link:template/bb/ring/util/mime_type.clj[ring.util.mime-type]
+- link:template/bb/ring/util/parsing.clj[ring.util.parsing]
+- link:template/bb/ring/util/response.clj[ring.util.response]
+- link:template/bb/ring/util/time.clj[ring.util.time]
 
 == link:LICENSE[License]
 

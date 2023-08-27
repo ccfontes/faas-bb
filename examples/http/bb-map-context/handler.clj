@@ -1,4 +1,4 @@
 (ns function.handler)
 
-(defn handler [content {:keys [headers env]}]
-  [(keys content) (vals content) (:content-type headers) (:upstream-url env)])
+(defn handler [{:keys [body headers env]}]
+  [(keys body) (vals body) (:content-type headers) (:upstream-url env)])
