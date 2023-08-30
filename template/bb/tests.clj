@@ -1,8 +1,8 @@
 (ns tests
-  ^{:author "Carlos da Cunha Fontes"
-    :url "https://github.com/ccfontes/faas-bb"
-    :license {:name "Distributed under the MIT License"
-              :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
+  {:author "Carlos da Cunha Fontes"
+   :url "https://github.com/ccfontes/faas-bb"
+   :license {:name "Distributed under the MIT License"
+             :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
   (:require
     [clojure.test :refer [run-tests]]
     [eg :refer [eg]]

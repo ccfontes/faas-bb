@@ -1,9 +1,9 @@
 (ns ring.util.response
   "Functions for generating and augmenting response maps."
-  ^{:author "James Reeves"
-    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-    :url "https://github.com/ring-clojure/ring"
-    :license {:name "Distributed under the MIT License, the same as Ring."}}
+  {:author "James Reeves"
+   :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+   :url "https://github.com/ring-clojure/ring"
+   :license {:name "Distributed under the MIT License, the same as Ring."}}
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
             [ring.util.io :refer [last-modified-date]]

@@ -1,9 +1,9 @@
 (ns ring.util.io
   "Utility functions for handling I/O."
-  ^{:author "James Reeves"
-    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-    :url "https://github.com/ring-clojure/ring"
-    :license {:name "Distributed under the MIT License, the same as Ring."}}
+  {:author "James Reeves"
+   :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+   :url "https://github.com/ring-clojure/ring"
+   :license {:name "Distributed under the MIT License, the same as Ring."}}
   (:import [java.io PipedInputStream
                     PipedOutputStream
                     ByteArrayInputStream

@@ -1,9 +1,9 @@
 (ns ring.util.mime-type
   "Utility functions for determining the mime-types files."
-  ^{:author "James Reeves"
-    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-    :url "https://github.com/ring-clojure/ring"
-    :license {:name "Distributed under the MIT License, the same as Ring."}}
+  {:author "James Reeves"
+   :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+   :url "https://github.com/ring-clojure/ring"
+   :license {:name "Distributed under the MIT License, the same as Ring."}}
   (:require [clojure.string :as str]))
 
 (def ^{:doc "A map of file extensions to mime-types."}

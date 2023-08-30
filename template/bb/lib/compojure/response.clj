@@ -1,9 +1,9 @@
 (ns compojure.response
   "A protocol for generating Ring response maps"
-  ^{:author "James Reeves"
-    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-    :url "https://github.com/weavejester/compojure"
-    :license {:name "Distributed under the MIT License, the same as Ring."}}
+  {:author "James Reeves"
+   :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+   :url "https://github.com/weavejester/compojure"
+   :license {:name "Distributed under the MIT License, the same as Ring."}}
   (:refer-clojure :exclude [send])
   (:require [ring.util.mime-type :as mime]
             [ring.util.response :as response]))

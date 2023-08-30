@@ -1,9 +1,8 @@
 (ns ring.middleware.text
-  ;^{:author "Carlos da Cunha Fontes"
-  ;:url "https://github.com/ccfontes/faas-bb"
-  ;:license {:name "Distributed under the MIT License"
-  ;          :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
-)
+  {:author "Carlos da Cunha Fontes"
+   :url "https://github.com/ccfontes/faas-bb"
+   :license {:name "Distributed under the MIT License"
+            :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}})
 
 (defn text-request? [request]
   (boolean

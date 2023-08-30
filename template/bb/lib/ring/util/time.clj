@@ -1,9 +1,9 @@
 (ns ring.util.time
   "Functions for dealing with time and dates in HTTP requests."
-  ^{:author "James Reeves"
-    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-    :url "https://github.com/ring-clojure/ring"
-    :license {:name "Distributed under the MIT License, the same as Ring."}}
+  {:author "James Reeves"
+   :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+   :url "https://github.com/ring-clojure/ring"
+   :license {:name "Distributed under the MIT License, the same as Ring."}}
   (:require [clojure.string :as str])
   (:import [java.text ParseException SimpleDateFormat]
            [java.util Locale TimeZone]))
