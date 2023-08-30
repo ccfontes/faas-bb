@@ -1,9 +1,9 @@
 (ns ring.middleware.json
   "Ring middleware for parsing JSON requests and generating JSON responses."
-  ^{:author "James Reeves"
-    :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
-    :url "https://github.com/ring-clojure/ring-json"
-    :license {:name "Distributed under the MIT License, the same as Ring."}}
+  {:author "James Reeves"
+   :contributors "Modified by Carlos da Cunha Fontes to work with Babashka"
+   :url "https://github.com/ring-clojure/ring-json"
+   :license {:name "Distributed under the MIT License, the same as Ring."}}
   (:require [cheshire.core :as json])
   (:import [java.io InputStream]))
 
@@ -41,10 +41,10 @@
   (assoc-in resp [:headers name] (str value)))
 
 (defn content-type
-  "Returns an updated Ring response with the a Content-Type header corresponding
+  "Returns an updated Ring response with the a 'content-type header corresponding
   to the given content-type."
   [resp content-type]
-  (header resp "Content-Type" content-type))
+  (header resp "content-type" content-type))
 
 (defn- json-request? [request]
   (when-let [type (get-in request [:headers "content-type"])]
@@ -65,18 +65,18 @@
 (def ^{:doc "The default response to return when a JSON request is malformed."}
   default-malformed-response
   {:status  400
-   :headers {"Content-Type" "text/plain"}
+   :headers {"content-type" "text/plain"}
    :body    "Malformed JSON in request body."})
 
 (defn json-body-request
   "Parse a JSON request body and assoc it back into the :body key. Returns nil
-  if the JSON is malformed. See: wrap-json-body."
+  if the JSON is malformed. See: wrap-json-body-request."
   [request options]
   (if-let [[valid? json] (read-json request options)]
     (when valid? (assoc request :body json))
     request))
 
-(defn wrap-json-body
+(defn wrap-json-body-request
   "Middleware that parses the body of JSON request maps, and replaces the :body
   key with the parsed data structure. Requests without a JSON content type are
   unaffected.
@@ -149,7 +149,7 @@
   [response options]
   (if (coll? (:body response))
     (let [json-resp (update-in response [:body] json/generate-string options)]
-      (if (contains? (:headers response) "Content-Type")
+      (if (contains? (:headers response) "content-type")
         json-resp
         (content-type json-resp "application/json; charset=utf-8")))
     response))
@@ -171,3 +171,5 @@
      (json-response (handler request) options))
     ([request respond raise]
      (handler request (fn [response] (respond (json-response response options))) raise))))
+
+(def wrap-json-body (comp wrap-json-response wrap-json-body-request))

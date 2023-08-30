@@ -19,10 +19,10 @@ USER app
 WORKDIR $HOME
 
 COPY index.clj function/bb.edn ./
-COPY ring ./ring
+COPY lib ./
 COPY function function
 
-RUN bb prepare
+RUN bb --deps-root function prepare && bb --deps-root function print-deps
 
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"

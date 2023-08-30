@@ -48,33 +48,36 @@ Although the Function namespace is called `function.handler`, the files themselv
 my-function:
   handler: ./anything/my-function
   ...
----- 
+----
 
-The `handler` function can be defined with one or two arguments.
+=== Defining Function handler
 
-Defining `handler` with one argument containing the request payload:
+In `bb` language:
 [source, clojure]
 ----
-This works for both `bb` and `bb-streaming` languages.
-
-(defn handler [payload] ...)
+(defn handler [{:keys [headers body context] :as event}]
+  ...)
 ----
-Defining `handler` with two arguments containing the request payload and context: 
-[source, clojure]
-----
-(defn handler [payload context] ...)
-----
-This works for `bb` language only.
+`event` is a map containing `:headers`, `:body` and `:context` keys.
 
-The `context` will contain a map of `:headers` and `:env` keys.
-
-The `:headers` key will contain a map of the request headers, as such:
+`:headers` contains headers, as such:
 [source, clojure]
 ----
 {:content-type "application/json"}
 ----
 
-The `:env` map contains a map with the environment variables. Additional environment variables can be defined in the `stack.yml` file, as such:
+`:body` is the payload body. When passing a JSON payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
+[source, yml]
+----
+my-function:
+  lang: bb
+  handler: ./anything/my-function
+  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
+  environment:
+    keywords: false
+----
+
+`:context` contains environment variables. Additional environment variables can be defined in the `stack.yml` file, as such:
 [source, yml]
 ----
 my-function:
@@ -85,23 +88,19 @@ my-function:
     MY_ENV1: foo
     MY_ENV2: 2
 ----
-The `:env` key will contain:
+`:context` will contain:
 [source, clojure]
 ----
  {:my-env1 "foo"
   :my-env2 2}
 ----
 
-When passing a JSON payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where string keys are preferable, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
-[source, yml]
+In `bb-streaming` language:
+[source, clojure]
 ----
-my-function:
-  lang: bb
-  handler: ./anything/my-function
-  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
-  environment:
-    keywords: false
+(defn handler [event] ...)
 ----
+The `event` is the payload body, and the function return is the payload body for the response.
 
 
 == link:examples[Function examples]
@@ -132,7 +131,14 @@ The template may benefit from some common middleware functions, such as those of
 
 == Third party code
 
-link:template/bb/ring/middleware/json.clj[ring.middleware.json] is derived from https://github.com/ring-clojure/ring-json/blob/master/src/ring/middleware/json.clj[ring-son] to work with Babashka, originally authored by James Reeves and used under the MIT license.
+The following files are derived from https://github.com/ring-clojure[ring] to work with Babashka, originally authored by James Reeves and contributors, and used under the MIT license:
+
+- link:template/bb/lib/ring/middleware/json.clj[ring.middleware.json]
+- link:template/bb/lib/ring/util/io.clj[ring.util.io]
+- link:template/bb/lib/ring/util/mime_type.clj[ring.util.mime-type]
+- link:template/bb/lib/ring/util/parsing.clj[ring.util.parsing]
+- link:template/bb/lib/ring/util/response.clj[ring.util.response]
+- link:template/bb/lib/ring/util/time.clj[ring.util.time]
 
 == link:LICENSE[License]
 
