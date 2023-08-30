@@ -70,7 +70,7 @@
 
 (defn json-body-request
   "Parse a JSON request body and assoc it back into the :body key. Returns nil
-  if the JSON is malformed. See: wrap-json-body."
+  if the JSON is malformed. See: wrap-json-body-request."
   [request options]
   (if-let [[valid? json] (read-json request options)]
     (when valid? (assoc request :body json))

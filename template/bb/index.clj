@@ -6,6 +6,7 @@
   (:require
     [org.httpkit.server :refer [run-server]]
     [ring.middleware.json :refer [wrap-json-body]]
+    [ring.middleware.text :refer [wrap-text-body]]
     [ring.middleware.headers :refer [wrap-lowercase-headers wrap-friendly-headers]]
     [ring.middleware.headers]
     [ring.util.walk :as ring-walk]
@@ -22,11 +23,12 @@
 (defn ->app [f env]
   (-> (->handler f env)
     (wrap-friendly-headers)
+    (wrap-text-body)
     (wrap-json-body {:keywords? (-> env :keywords keywords?)})
     (wrap-lowercase-headers)))
 
 (defn -main []
   (let [env (ring-walk/format-context (System/getenv))]
-    (run-server (->app #'function/handler env)
+    (run-server (->app function/handler env)
                 {:port 8082})
     @(promise)))

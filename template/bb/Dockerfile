@@ -19,7 +19,7 @@ USER app
 WORKDIR $HOME
 
 COPY index.clj function/bb.edn ./
-COPY lib ./lib
+COPY lib ./
 COPY function function
 
 RUN bb prepare && bb print-deps
