@@ -22,7 +22,7 @@ COPY index.clj function/bb.edn ./
 COPY lib ./
 COPY function function
 
-RUN bb prepare && bb print-deps
+RUN bb prepare --print-deps function/handler && bb print-deps
 
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"

@@ -66,7 +66,16 @@ In `bb` language:
 {:content-type "application/json"}
 ----
 
-`:body` is the payload body.
+`:body` is the payload body. When passing a JSON payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
+[source, yml]
+----
+my-function:
+  lang: bb
+  handler: ./anything/my-function
+  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
+  environment:
+    keywords: false
+----
 
 `:context` contains environment variables. Additional environment variables can be defined in the `stack.yml` file, as such:
 [source, yml]
@@ -86,23 +95,12 @@ my-function:
   :my-env2 2}
 ----
 
-There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
-[source, yml]
-----
-my-function:
-  lang: bb
-  handler: ./anything/my-function
-  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
-  environment:
-    keywords: false
-----
-
 In `bb-streaming` language:
 [source, clojure]
 ----
 (defn handler [event] ...)
 ----
-The `event` is the payload body.
+The `event` is the payload body, and the function return is the payload body for the response.
 
 
 == link:examples[Function examples]
@@ -135,12 +133,12 @@ The template may benefit from some common middleware functions, such as those of
 
 The following files are derived from https://github.com/ring-clojure[ring] to work with Babashka, originally authored by James Reeves and contributors, and used under the MIT license:
 
-- link:template/bb/ring/middleware/json.clj[ring.middleware.json]
-- link:template/bb/ring/util/io.clj[ring.util.io]
-- link:template/bb/ring/util/mime_type.clj[ring.util.mime-type]
-- link:template/bb/ring/util/parsing.clj[ring.util.parsing]
-- link:template/bb/ring/util/response.clj[ring.util.response]
-- link:template/bb/ring/util/time.clj[ring.util.time]
+- link:template/bb/lib/ring/middleware/json.clj[ring.middleware.json]
+- link:template/bb/lib/ring/util/io.clj[ring.util.io]
+- link:template/bb/lib/ring/util/mime_type.clj[ring.util.mime-type]
+- link:template/bb/lib/ring/util/parsing.clj[ring.util.parsing]
+- link:template/bb/lib/ring/util/response.clj[ring.util.response]
+- link:template/bb/lib/ring/util/time.clj[ring.util.time]
 
 == link:LICENSE[License]
 
