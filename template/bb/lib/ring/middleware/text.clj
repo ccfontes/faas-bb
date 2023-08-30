@@ -6,8 +6,9 @@
 )
 
 (defn text-request? [request]
-  (when-let [type (get-in request [:headers "content-type"])]
-    (seq (re-find #"^text/plain" type))))
+  (boolean
+    (when-let [type (get-in request [:headers "content-type"])]
+      (seq (re-find #"^text/plain" type)))))
 
 (defn wrap-text-body [handler]
   (fn [request]
