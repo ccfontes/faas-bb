@@ -6,9 +6,15 @@
   (:require
     [clojure.test :refer [run-tests]]
     [eg :refer [eg]]
+    [ring.middleware.text :as middleware-text]
     [ring.util.walk :as ring-walk]
     [ring.util.string :as ring-string]
     [index]))
+
+(eg middleware-text/text-request?
+  {:headers {}} => false
+  {:headers {"content-type" "text/plain"}} => true
+  {:headers {"content-type" "application/json"}} => false)
 
 (eg ring-string/read-string
   "0A"   => "0A"

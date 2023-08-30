@@ -1,4 +1,9 @@
-(ns ring.middleware.text)
+(ns ring.middleware.text
+  ;^{:author "Carlos da Cunha Fontes"
+  ;:url "https://github.com/ccfontes/faas-bb"
+  ;:license {:name "Distributed under the MIT License"
+  ;          :url "https://github.com/ccfontes/faas-bb/blob/main/LICENSE"}}
+)
 
 (defn text-request? [request]
   (when-let [type (get-in request [:headers "content-type"])]
