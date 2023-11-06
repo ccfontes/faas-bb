@@ -76,7 +76,7 @@ jobs:
           (docker stop bb-routes-bell || exit 0)
           (docker rm bb-routes-bell || exit 0)
           docker run -d --name bb-routes-bell ghcr.io/${{ github.repository_owner }}/bb-routes-bell:latest bb --main index
-          if [ "$(docker exec bb-routes-bell curl -X POST -d '{"foo": "bar"}' -H 'content-type: application/json' --retry 10 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo"],["spam"]]' ]; then
+          if [ "$(docker exec bb-routes-bell curl -X POST -d '{"foo": "bar"}' -H 'content-type: application/json' --retry 10 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo"],["bar"]]' ]; then
             exit 8
           fi
           if [ "$(docker exec bb-routes-bell curl -X PUT --retry 10 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082/foo/123)" != '[["id"],["123"]] ]'; then
