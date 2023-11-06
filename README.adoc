@@ -100,8 +100,7 @@ In `bb-streaming` language:
 ----
 (defn handler [event] ...)
 ----
-The `event` is the payload body, and the function return is the payload body for the response.
-
+The `event` is extracted from the HTTP payload body, and the function return is used as the HTTP payload body for the response.
 
 == link:examples[Function examples]
 
