@@ -8,7 +8,6 @@
     [ring.middleware.json :refer [wrap-json-body]]
     [ring.middleware.text :refer [wrap-text-body]]
     [ring.middleware.headers :refer [wrap-lowercase-headers wrap-friendly-headers]]
-    [ring.middleware.headers]
     [ring.util.walk :as ring-walk]
     [compojure.response :as response]
     [function.handler :as function]))
