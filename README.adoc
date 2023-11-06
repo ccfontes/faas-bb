@@ -114,7 +114,10 @@ All tests run in CI with Github Actions. Some commands link:.github/workflows/fa
 
 === Unit tests
 
-Run locally the unit tests for `bb` language:
+Run locally the unit tests for OpenFaaS Function template `bb` language.
+
+The requirement is that babashka (`bb`) is https://github.com/babashka/babashka#installation[installed].
+
 [source, bash]
 ----
 cd template/bb
