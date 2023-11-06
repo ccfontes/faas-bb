@@ -1,3 +1,2 @@
-; used only for tests. Not copied into docker container
 {:paths ["." "lib"]
  :deps {eg/eg {:mvn/version "0.5.6-alpha"}}}

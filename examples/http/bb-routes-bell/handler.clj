@@ -3,9 +3,8 @@
 
 (def handler
   (router
-    (POST "/"
-          (fn [{:keys [body]}]
-            [(keys body) (vals body)]))
+    (POST "/" (fn [{:keys [body]}]
+                [(keys body) (vals body)]))
     (PUT "/foo/:id"
          (fn [{:keys [path-params]}]
            [(keys path-params) (vals path-params)]))))
