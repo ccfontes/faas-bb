@@ -21,5 +21,5 @@ jobs:
     - name: Install Babashka
       run: bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
     - name: Run unit tests
-      run: bb tests.clj
+      run: bb --config tests.edn tests.clj
       working-directory: ${{ github.workspace }}/template/bb
