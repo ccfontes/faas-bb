@@ -118,7 +118,7 @@ Run locally the unit tests for `bb` language:
 [source, bash]
 ----
 cd template/bb
-bb tests.clj
+bb --config tests.edn tests.clj
 ----
 `tests.clj` is included with the template so you can test any changes you make to the template before using it.
 
