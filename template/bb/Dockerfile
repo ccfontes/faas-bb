@@ -18,12 +18,14 @@ RUN addgroup --system app && adduser --system --ingroup app app && \
 USER app
 WORKDIR $HOME
 
-COPY --chown=app:app index.clj function/bb.edn ./
-COPY --chown=app:app lib ./
-COPY --chown=app:app function function
+COPY --chown=app:app function/bb.edn ./
+RUN bb prepare && bb print-deps
 
-RUN rm function/bb.edn && \
-    bb --deps-root function prepare && bb --deps-root function print-deps
+COPY --chown=app:app function function
+RUN rm function/bb.edn
+
+COPY --chown=app:app index.clj ./
+COPY --chown=app:app lib ./
 
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"
