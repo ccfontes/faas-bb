@@ -1,6 +1,6 @@
-FROM ghcr.io/openfaas/of-watchdog:0.9.11 AS watchdog
-FROM babashka/babashka:1.3.176 AS babashka
-FROM clojure:tools-deps-1.11.1.1257
+FROM ghcr.io/openfaas/of-watchdog:0.9.12 AS watchdog
+FROM babashka/babashka:1.3.182 AS babashka
+FROM clojure:tools-deps-1.11.1.1347
 
 RUN set -e
 
@@ -10,10 +10,10 @@ COPY --from=babashka /usr/local/bin/bb /usr/local/bin/bb
 ENV HOME /home/app
 
 RUN addgroup --system app && adduser --system --ingroup app app && \
-    mkdir -p $HOME/.deps.clj/1.11.1.1257/ClojureTools && \
+    mkdir -p $HOME/.deps.clj/1.11.1.1347/ClojureTools && \
     mv /root/.m2 $HOME && \
     chown app:app -R $HOME/.m2 && \
-    mv /usr/local/lib/clojure/libexec/clojure-tools-1.11.1.1257.jar $HOME/.deps.clj/1.11.1.1257/ClojureTools
+    mv /usr/local/lib/clojure/libexec/clojure-tools-1.11.1.1347.jar $HOME/.deps.clj/1.11.1.1347/ClojureTools
 
 USER app
 WORKDIR $HOME
