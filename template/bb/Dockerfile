@@ -12,7 +12,7 @@ ENV HOME /home/app
 RUN addgroup --system app && adduser --system --ingroup app app && \
     mkdir -p $HOME/.deps.clj/1.11.1.1347/ClojureTools && \
     mv /root/.m2 $HOME && \
-    chown app:app -R $HOME/.m2 && \
+    chown app:app -R $HOME && \
     mv /usr/local/lib/clojure/libexec/clojure-tools-1.11.1.1347.jar $HOME/.deps.clj/1.11.1.1347/ClojureTools
 
 USER app

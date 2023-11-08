@@ -31,3 +31,7 @@ functions:
     lang: bb
     handler: ./http/bb-routes-bell
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-routes-bell
+  bb-hiccup:
+    lang: bb
+    handler: ./http/bb-hiccup
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-hiccup
