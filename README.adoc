@@ -66,7 +66,7 @@ In `bb` language:
 {:content-type "application/json"}
 ----
 
-`:body` is the payload body. When passing a JSON payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
+`:body` is the payload body. When passing a JSON object payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
 [source, yml]
 ----
 my-function:
@@ -101,6 +101,10 @@ In `bb-streaming` language:
 (defn handler [event] ...)
 ----
 The `event` is extracted from the HTTP payload body, and the function return is used as the HTTP payload body for the response.
+
+== Adding namespaces
+
+Namespace for each babashka source file created side by side with `handler.clj` must also be prefixed with `function.` Example: when creating a `view.clj` file in the same directory as `handler.clj`, namespace is `function.view`.
 
 == link:examples[Function examples]
 
