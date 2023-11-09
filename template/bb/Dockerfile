@@ -4,6 +4,8 @@ FROM clojure:tools-deps-1.11.1.1347
 
 RUN set -e
 
+ARG TEST=true
+
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 COPY --from=babashka /usr/local/bin/bb /usr/local/bin/bb
 
@@ -26,6 +28,13 @@ RUN rm function/bb.edn
 
 COPY --chown=app:app index.clj ./
 COPY --chown=app:app lib ./
+
+ENV TEST_DIR $HOME/function/test
+
+RUN if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
+      /bin/sh -c "cd $TEST_DIR && bb run-tests.clj" && \
+      rm -rf $TEST_DIR; \
+    fi
 
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"

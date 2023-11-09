@@ -110,7 +110,25 @@ Namespace for each babashka source file created side by side with `handler.clj` 
 
 See the link:examples[examples] directory to find a fully working set of OpenFaaS Functions written in Babashka.
 
-== Tests
+== Function tests
+
+To test the code of a Function, create a `test` directory in the Function top-level directory, containing:
+
+- `run-tests.clj`: A script that runs the tests. You can use any test library and test runner you like.
+- `bb.edn`: with `{:paths ["../.."]}`
+
+To disable running existing tests, set the `TEST` build time argument to `false`:
+[source, yml]
+----
+my-function:
+  lang: bb
+  handler: ./anything/my-function
+  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
+   build_args:
+      TEST: false
+----
+
+== faas-bb tests
 
 === CI tests
 
