@@ -87,6 +87,6 @@ jobs:
           (docker rm bb-hiccup || exit 0)
           docker run -d --name bb-hiccup ghcr.io/${{ github.repository_owner }}/bb-hiccup:latest bb --main index
           bb_hiccup_output=$(docker exec bb-hiccup curl -X GET -d '{"item-list": ["foo","bar","spam"]}' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)
-          if [[ "${bb_hiccup_output:0:5}" != "<HTML" ]]; then
+          if [[ "${bb_hiccup_output:0:5}" != "<html" ]]; then
             exit 10
           fi
