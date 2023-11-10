@@ -10,7 +10,8 @@
     [ring.middleware.headers :refer [wrap-lowercase-headers wrap-friendly-headers]]
     [ring.util.walk :as ring-walk]
     [compojure.response :as response]
-    [function.handler :as function]))
+    [function.handler :as function])
+  (:gen-class))
 
 (def keywords? #(if (nil? %) true %))
 
@@ -26,7 +27,7 @@
     (wrap-json-body {:keywords? (-> env :keywords keywords?)})
     (wrap-lowercase-headers)))
 
-(defn -main []
+(defn -main [& _]
   (let [env (ring-walk/format-context (System/getenv))]
     (run-server (->app function/handler env)
                 {:port 8082})

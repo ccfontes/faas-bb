@@ -1,6 +1,7 @@
+FROM alpine:3.18.4 AS minimal
 FROM ghcr.io/openfaas/of-watchdog:0.9.12 AS watchdog
 FROM babashka/babashka:1.3.182 AS babashka
-FROM clojure:tools-deps-1.11.1.1347
+FROM clojure:tools-deps-1.11.1.1347 AS clj-tools-deps
 
 RUN set -e
 
@@ -35,6 +36,14 @@ RUN if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
       /bin/sh -c "cd $TEST_DIR && bb run-tests.clj" && \
       rm -rf $TEST_DIR; \
     fi
+
+RUN ./nativity.clj index.clj
+
+FROM minimal
+
+COPY --from=clj-tools-deps /home/app/index ./
+
+RUN ls -l index
 
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"
