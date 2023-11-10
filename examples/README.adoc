@@ -1,6 +1,6 @@
 = OpenFaaS Functions in Babashka =
 
-Go into the link:bb[bb] and link:bb-streaming[bb-streaming] directories to find the Babashka Function code examples.
+Go into the link:http[http] and link:streaming[streaming] directories to find the Babashka Function code examples.
 
 The following documentation explains how to run these Functions in OpenFaaS.
 
@@ -40,6 +40,6 @@ faas up
 Test a Function using the OpenFaaS UI or with the following command:
 [source, bash]
 ----
-echo "world" | faas invoke bb-hello
+echo "world" | faas invoke bb-http-hello
 ----
-Should ouput "Hello, world" string to the terminal.
+Should ouput `"Hello, world"` string to the terminal.
