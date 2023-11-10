@@ -42,11 +42,11 @@ faas new --lang bb my-bb-function
 * a `function.handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
 * a `bb.edn` file specifying classpath to find `function.handler`.
 
-Although the Function namespace is called `function.handler`, the files themselves can be named anything you want. Example:
+Although the Function namespace is called `function.handler`, the directory path to the Function handler can be named anything you want. Example:
 [source, yml]
 ----
 my-function:
-  handler: ./anything/my-function
+  handler: ./anything/you-want
   ...
 ----
 
@@ -102,17 +102,13 @@ In `bb-streaming` language:
 ----
 The `event` is extracted from the HTTP payload body, and the function return is used as the HTTP payload body for the response.
 
-== Adding namespaces
+=== Adding namespaces
 
 Namespace for each babashka source file created side by side with `handler.clj` must also be prefixed with `function.` Example: when creating a `view.clj` file in the same directory as `handler.clj`, namespace is `function.view`.
 
-== link:examples[Function examples]
+=== Function tests
 
-See the link:examples[examples] directory to find a fully working set of OpenFaaS Functions written in Babashka.
-
-== Function tests
-
-To test the code of a Function, create a `test` directory in the Function top-level directory, containing:
+To test the code of a Function, create a `test` directory in the Function's top-level directory, containing:
 
 - `run-tests.clj`: A script that runs the tests. You can use any test library and test runner you like.
 - `bb.edn`: with `{:paths ["../.."]}`
@@ -128,6 +124,10 @@ my-function:
       TEST: false
 ----
 
+== link:examples[Function examples]
+
+See the link:examples[examples] directory to find a fully working set of OpenFaaS Functions written in Babashka.
+
 == faas-bb tests
 
 === CI tests
@@ -136,7 +136,7 @@ All tests run in CI with Github Actions. Some commands link:.github/workflows/fa
 
 === Unit tests
 
-Run locally the unit tests for OpenFaaS Function template `bb` language.
+Run locally the unit tests for the `bb` template.
 
 The requirement is that babashka (`bb`) is https://github.com/babashka/babashka#installation[installed].
 
