@@ -41,6 +41,9 @@ faas new --lang bb my-bb-function
 
 * a `function.handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
 * a `bb.edn` file specifying classpath to find `function.handler`.
+* a `test` directory containing:
+** a `run-tests.clj` script that runs the tests. You can use any test library and test runner you like.
+** a `bb.edn` file with `{:paths ["../.."]}` - required for the tests to find `function.handler`. Insert here `:deps` your Function needs.
 
 Although the Function namespace is called `function.handler`, the directory path to the Function handler can be named anything you want. Example:
 [source, yml]
@@ -110,8 +113,8 @@ Namespace for each babashka source file created side by side with `handler.clj` 
 
 To test the code of a Function, create a `test` directory in the Function's top-level directory, containing:
 
-- `run-tests.clj`: A script that runs the tests. You can use any test library and test runner you like.
-- `bb.edn`: with `{:paths ["../.."]}`
+* `run-tests.clj`: A script that runs the tests. You can use any test library and test runner you like.
+* `bb.edn`: with `{:paths ["../.."]}`
 
 To disable running existing tests, set the `TEST` build time argument to `false`:
 [source, yml]
@@ -157,12 +160,12 @@ The template may benefit from some common middleware functions, such as those of
 
 The following files are derived from https://github.com/ring-clojure[ring] to work with Babashka, originally authored by James Reeves and contributors, and used under the MIT license:
 
-- link:template/bb/lib/ring/middleware/json.clj[ring.middleware.json]
-- link:template/bb/lib/ring/util/io.clj[ring.util.io]
-- link:template/bb/lib/ring/util/mime_type.clj[ring.util.mime-type]
-- link:template/bb/lib/ring/util/parsing.clj[ring.util.parsing]
-- link:template/bb/lib/ring/util/response.clj[ring.util.response]
-- link:template/bb/lib/ring/util/time.clj[ring.util.time]
+* link:template/bb/lib/ring/middleware/json.clj[ring.middleware.json]
+* link:template/bb/lib/ring/util/io.clj[ring.util.io]
+* link:template/bb/lib/ring/util/mime_type.clj[ring.util.mime-type]
+* link:template/bb/lib/ring/util/parsing.clj[ring.util.parsing]
+* link:template/bb/lib/ring/util/response.clj[ring.util.response]
+* link:template/bb/lib/ring/util/time.clj[ring.util.time]
 
 == link:LICENSE[License]
 

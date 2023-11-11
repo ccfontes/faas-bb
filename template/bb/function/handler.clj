@@ -1,4 +1,4 @@
 (ns function.handler)
 
-(defn handler [content]
-  content)
+(defn handler [{:keys [body]}]
+  {:body (str "Hello, " body)})
