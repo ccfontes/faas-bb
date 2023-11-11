@@ -31,7 +31,7 @@ jobs:
           (docker stop my-bb-http-function || exit 0)
           (docker rm my-bb-http-function || exit 0)
           docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest bb --main index
-          if [ "$(docker exec my-bb-http-function curl -X POST --data-raw "Hello world" --retry 6 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello world" ]; then
+          if [ "$(docker exec my-bb-http-function curl -X POST --data-raw "world" --retry 6 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello, world" ]; then
             exit 2
           fi
       - name: Build provided Function examples and invoke them
