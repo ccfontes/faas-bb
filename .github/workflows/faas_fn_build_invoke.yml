@@ -62,7 +62,7 @@ jobs:
           (docker stop bb-http-hello || exit 0)
           (docker rm bb-http-hello || exit 0)
           docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest bb --main index
-          if [ "$(docker exec bb-http-hello curl -X POST -d 'world' -H 'content-type: text/plain' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != 'Hello, world' ]; then
+          if [ "$(docker exec bb-http-hello curl -X GET --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != 'Hello OpenFaaS!' ]; then
             exit 6
           fi
 
