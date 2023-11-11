@@ -4,7 +4,7 @@
             [function.handler :refer [handler]]))
 
 (eg handler
-  {:body "foo"} {:body "Hello, foo"})
+  {:body "anything"} "Hello OpenFaaS!")
 
 (let [{:keys [fail error]} (run-tests 'function.test.run-tests)]
   (when (pos? (+ fail error))
