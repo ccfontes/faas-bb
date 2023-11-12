@@ -2,5 +2,5 @@
 
 (defn handler [{:keys [request-method uri]}]
   (case [request-method uri]
-    [:get "/"] (constantly "root")
-    [:get "/foo"] (constantly "foo")))
+    [:get "/"] "root"
+    [:get "/foo"] "foo"))
