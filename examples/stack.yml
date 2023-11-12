@@ -27,6 +27,10 @@ functions:
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-map-context
     environment:
       keywords: true
+  bb-routes:
+    lang: bb
+    handler: ./http/bb-routes
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-routes
   bb-routes-bell:
     lang: bb
     handler: ./http/bb-routes-bell
