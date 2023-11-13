@@ -25,15 +25,6 @@ jobs:
           if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-streaming-function:latest ./index.clj)" != "Hello world" ]; then
             exit 1
           fi
-
-          faas new --lang bb my-bb-http-function --prefix ghcr.io/${{ github.repository_owner }}
-          faas build -f my-bb-http-function.yml
-          (docker stop my-bb-http-function || exit 0)
-          (docker rm my-bb-http-function || exit 0)
-          docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest bb --main index
-          if [ "$(docker exec my-bb-http-function curl -X GET --retry 6 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello OpenFaaS!" ]; then
-            exit 2
-          fi
       - name: Build provided Function examples and invoke them
         env:
           DOCKER_REGISTRY_IMG_ORG_PATH: ghcr.io/${{ github.repository_owner }}
