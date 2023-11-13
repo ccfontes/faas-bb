@@ -43,7 +43,6 @@ faas new --lang bb my-bb-function
 * a `bb.edn` file specifying classpath to find `function.handler`.
 * a `test` directory containing:
 ** a `run-tests.clj` script that runs the tests. You can use any test library and test runner you like.
-** a `bb.edn` with `:paths` preset to find your Function's source files.
 
 Although the Function namespace is called `function.handler`, the directory path to the Function handler can be named anything you want. Example:
 [source, yml]
@@ -104,6 +103,10 @@ In `bb-streaming` language:
 (defn handler [event] ...)
 ----
 The `event` is extracted from the HTTP payload body, and the function return is used as the HTTP payload body for the response.
+
+=== Adding dependencies
+
+In the root directory of your Function, create a `bb.edn` file with a `:deps` map to add dependencies to your project.
 
 === Adding namespaces
 
