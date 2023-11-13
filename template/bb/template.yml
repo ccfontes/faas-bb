@@ -1,4 +1,4 @@
 language: bb
-fprocess: bb --classpath . --main index
+fprocess: bb --classpath ./ --main index
 welcome_message: |
   You have created a new HTTP Function which uses Babashka
