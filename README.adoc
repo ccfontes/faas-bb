@@ -8,7 +8,7 @@
 :url-ci-status-clj-kondo: "{url-proj}/actions/workflows/clj-kondo.yml"
 :img-license: https://img.shields.io/badge/license-MIT-black.svg
 
-= faas-bb image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}] image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}] image:{img-ci-lychee-link-check-status}[link={url-ci-status-lychee-link}] image:{img-license}[link=LICENSE]
+= faas-bb image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}] image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}] image:{img-license}[link=LICENSE]
 
 An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://github.com/babashka/babashka[Babashka].
 
