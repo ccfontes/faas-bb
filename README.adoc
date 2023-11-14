@@ -6,7 +6,6 @@
 :url-ci-status-tests: "{url-proj}/actions/workflows/faas_fn_build_invoke.yml"
 :url-ci-status-hadolint: "{url-proj}/actions/workflows/hadolint.yml"
 :url-ci-status-clj-kondo: "{url-proj}/actions/workflows/clj-kondo.yml"
-:url-ci-status-lychee-link: "{url-proj}/actions/workflows/broken-link-checker.yml"
 :img-license: https://img.shields.io/badge/license-MIT-black.svg
 
 = faas-bb image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}] image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}] image:{img-ci-lychee-link-check-status}[link={url-ci-status-lychee-link}] image:{img-license}[link=LICENSE]
