@@ -24,14 +24,15 @@ COPY --chown=app:app function/bb.edn ./
 RUN bb prepare && bb print-deps
 
 COPY --chown=app:app function function
-RUN rm function/bb.edn
+RUN 
 
 COPY --chown=app:app index.clj ./
 COPY --chown=app:app lib ./
 
 ENV TEST_DIR $HOME/function/test
 
-RUN if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
+RUN rm function/bb.edn && \
+    if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
       /bin/sh -c "cd $TEST_DIR && bb run-tests.clj" && \
       rm -rf $TEST_DIR; \
     fi
