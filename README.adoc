@@ -125,6 +125,8 @@ my-function:
       TEST: false
 ----
 
+Existing test files are removed from the final Docker image used to run the Function in OpenFaaS.
+
 == link:examples[Function examples]
 
 See the link:examples[examples] directory to find a fully working set of OpenFaaS Functions written in Babashka.

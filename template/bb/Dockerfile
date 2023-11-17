@@ -23,46 +23,39 @@ COPY --chown=app:app function/bb.edn ./
 RUN bb prepare && bb print-deps
 
 
-FROM build AS test
-
-ARG TEST=true
-
-COPY --chown=app:app function/test/bb.edn* function/test/bb.edn
-
-USER app
-
-RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
-     /bin/sh -c "cd $TEST_DIR && bb prepare && bb print-deps"; \
-    fi
-
-
 FROM build AS build_function
-
-COPY --chown=app:app function function
-COPY --chown=app:app index.clj lib ./
-
-
-FROM test
-
-COPY --chown=app:app function function
-COPY --chown=app:app index.clj lib ./
-
-USER app
-
-RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
-      /bin/sh -c "cd $TEST_DIR && bb run-tests.clj"; \
-    fi
-
-
-FROM build_function AS build_no_tests
 
 USER app
 WORKDIR $HOME
 
+COPY --chown=app:app function function
+COPY --chown=app:app index.clj lib ./
+
 RUN rm -rf function/bb.edn "$TEST_DIR"
 
 
-FROM build_no_tests AS ship
+FROM build AS test
+
+RUN ls
+
+ARG TEST=true
+
+USER app
+WORKDIR $HOME
+
+RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
+      bb test-prepare; \
+    fi
+
+COPY --chown=app:app function function
+COPY --chown=app:app index.clj lib ./
+
+RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
+      bb test; \
+    fi
+
+
+FROM build_function AS ship
 
 USER app
 WORKDIR $HOME
