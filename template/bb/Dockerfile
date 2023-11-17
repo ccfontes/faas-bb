@@ -33,7 +33,7 @@ RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
      /bin/sh -c "cd $TEST_DIR && bb prepare && bb print-deps"; \
     fi
 
-FROM build
+FROM build AS build_function
 
 COPY --chown=app:app function function
 COPY --chown=app:app index.clj lib ./
@@ -47,11 +47,11 @@ RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
       /bin/sh -c "cd $TEST_DIR && bb run-tests.clj"; \
     fi
 
-FROM build
+FROM build_function as build_no_tests
 
 RUN rm -rf function/bb.edn "$TEST_DIR"
 
-FROM build AS ship
+FROM build_no_tests AS ship
 
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"
