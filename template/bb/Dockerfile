@@ -29,7 +29,7 @@ ENV TEST_DIR $HOME/function/test
 
 COPY --chown=app:app function/test/bb.edn* function/test/bb.edn
 
-RUN if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
+RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
      /bin/sh -c "cd $TEST_DIR && bb prepare && bb print-deps"; \
     fi
 
@@ -43,13 +43,13 @@ FROM test
 COPY --chown=app:app function function
 COPY --chown=app:app index.clj lib ./
 
-RUN if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
+RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
       /bin/sh -c "cd $TEST_DIR && bb run-tests.clj"; \
     fi
 
 FROM build
 
-RUN rm -rf function/bb.edn $TEST_DIR
+RUN rm -rf function/bb.edn "$TEST_DIR"
 
 FROM build AS ship
 
