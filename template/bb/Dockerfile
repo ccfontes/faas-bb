@@ -24,7 +24,6 @@ COPY --chown=app:app function/bb.edn ./
 RUN bb prepare && bb print-deps
 
 COPY --chown=app:app function function
-RUN 
 
 COPY --chown=app:app index.clj ./
 COPY --chown=app:app lib ./
