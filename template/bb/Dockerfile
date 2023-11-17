@@ -23,10 +23,16 @@ WORKDIR $HOME
 COPY --chown=app:app function/bb.edn ./
 RUN bb prepare && bb print-deps
 
+ENV TEST_DIR $HOME/function/test
+
+COPY --chown=app:app function/test/bb.edn* function/test/bb.edn
+RUN if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
+     /bin/sh -c "cd $TEST_DIR && bb prepare && bb print-deps"; \
+    fi
+
 COPY --chown=app:app function function
 COPY --chown=app:app index.clj lib ./
 
-ENV TEST_DIR $HOME/function/test
 RUN rm function/bb.edn && \
     if [ $TEST != false ] && [ -d $TEST_DIR ]; then \
       /bin/sh -c "cd $TEST_DIR && bb run-tests.clj" && \
