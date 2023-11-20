@@ -1,0 +1,3 @@
+{:paths ["."]
+ :tasks {run-function index/-main
+         test function.test.run-tests/-main}}

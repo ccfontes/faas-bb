@@ -1,7 +1,8 @@
 (ns function.test.run-tests
-  (:require [eg :refer [eg]]
-            [clojure.test :refer [run-tests]]
-            [function.handler :refer [handler]]))
+  (:require
+    [eg :refer [eg]]
+    [clojure.test :refer [run-tests]]
+    [function.handler :refer [handler]]))
 
 (eg handler
   {:body "anything"} "Hello OpenFaaS!")
