@@ -11,10 +11,12 @@
 
 (defn merge-deps [{:keys [src test out]}]
   (spit out
-    (or
-      (merge-with merge
-        (when (fs/exists? src) (-> src slurp edn/read-string))
-        (when (fs/exists? test) (-> test slurp edn/read-string)))
-      {})))
+    (merge
+      (-> "bb.edn" slurp edn/read-string)
+      (or
+        (merge-with merge
+          (when (fs/exists? src) (-> src slurp edn/read-string))
+          (when (fs/exists? test) (-> test slurp edn/read-string)))
+        {}))))
 
 (merge-deps edn-filenames)
