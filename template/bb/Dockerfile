@@ -50,8 +50,6 @@ FROM build AS ship
 USER app
 WORKDIR $HOME
 
-RUN find .m2 -type f -print
-
 ENV mode="http"
 ENV fprocess="bb --config ship.edn run-function"
 ENV upstream_url="http://127.0.0.1:8082"
