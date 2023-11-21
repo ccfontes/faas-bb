@@ -1,3 +1,4 @@
 examples/build
 examples/template
 .clj-kondo/.cache
+.vscode

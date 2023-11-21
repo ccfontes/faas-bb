@@ -1,0 +1,4 @@
+{:paths ["."]
+ :tasks {run-function index/-main
+         test function.test.run-tests/-main
+         merge-config merge-config/-main}}

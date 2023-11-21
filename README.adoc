@@ -38,10 +38,10 @@ faas new --lang bb my-bb-function
 `of-watchdog` mode here is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
 
 * a `function.handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
-* a `bb.edn` file specifying classpath to find `function.handler`.
+* a `bb.edn` file where ship dependencies can be added. Remove this file if you don't need to add any dependencies.
 * a `test` directory containing:
-** a `run-tests.clj` script that runs the tests. You can use any test library and test runner you like.
-** a `bb.edn` with `:paths` preset to find your Function's source files.
+** `run-tests.clj` with the namespace that will be used to run the tests. You can use any test library and test runner you like.
+** a `bb.edn` file where test dependencies can be added. Remove this file if you don't need to add any dependencies.
 
 Although the Function namespace is called `function.handler`, the directory path to the Function handler can be named anything you want. Example:
 [source, yml]
@@ -109,10 +109,10 @@ Namespace for each babashka source file created side by side with `handler.clj` 
 
 === Function tests
 
-To test the code of a Function, create a `test` directory in the Function's top-level directory, containing:
+To test the code of a Function, a `test` directory in the Function's top-level directory is provided, containing:
 
-* `run-tests.clj`: A script that runs the tests. You can use any test library and test runner you like.
-* `bb.edn`: with `{:paths ["../.."]}`
+* `run-tests.clj`: With the namespace that will be used to run the tests. You can use any test library and test runner you like.
+* a `bb.edn` file where test dependencies can be added. Remove this file if you don't need to add any dependencies.
 
 To disable running existing tests, set the `TEST` build time argument to `false`:
 [source, yml]
@@ -124,6 +124,10 @@ my-function:
    build_args:
       TEST: false
 ----
+
+If you don't plan on testing, you can remove the `test` directory altogether.
+
+Existing test files are removed from the final Docker image used to run the Function in OpenFaaS.
 
 == link:examples[Function examples]
 

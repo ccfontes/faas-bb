@@ -23,6 +23,7 @@ jobs:
           faas new --lang bb-streaming my-bb-streaming-function --prefix ghcr.io/${{ github.repository_owner }}
           faas build -f my-bb-streaming-function.yml
           if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-streaming-function:latest ./index.clj)" != "Hello world" ]; then
+            docker logs my-bb-streaming-function
             exit 1
           fi
 
@@ -30,8 +31,9 @@ jobs:
           faas build -f my-bb-http-function.yml
           (docker stop my-bb-http-function || exit 0)
           (docker rm my-bb-http-function || exit 0)
-          docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest bb --main index
+          docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest bb --config ship.edn run-function
           if [ "$(docker exec my-bb-http-function curl -X GET --retry 6 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != "Hello OpenFaaS!" ]; then
+            docker logs my-bb-http-function
             exit 2
           fi
       - name: Build provided Function examples and invoke them
@@ -46,14 +48,17 @@ jobs:
           faas build
 
           if [ "$(echo world | docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-hello:latest ./index.clj)" != "Hello, world" ]; then
+              docker logs bb-streaming-hello
               exit 3
           fi
 
           if [ "$(echo '{"a" {"b" 10}}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest ./index.clj)" != "[10]" ]; then
+              docker logs bb-streaming-lib
               exit 4
           fi
 
           if [ -n "$(echo '{"a" 10}' | docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-lib:latest ./index.clj)" ]; then
+              docker logs bb-streaming-lib
               exit 5
           fi
 
@@ -61,46 +66,53 @@ jobs:
 
           (docker stop bb-http-hello || exit 0)
           (docker rm bb-http-hello || exit 0)
-          docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest bb --main index
+          docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest bb --config ship.edn run-function
           if [ "$(docker exec bb-http-hello curl -X GET --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != 'Hello OpenFaaS!' ]; then
+            docker logs bb-http-hello
             exit 6
           fi
 
           (docker stop bb-http-map || exit 0)
           (docker rm bb-http-map || exit 0)
-          docker run -d --name bb-http-map ghcr.io/${{ github.repository_owner }}/bb-http-map:latest bb --main index
+          docker run -d --name bb-http-map ghcr.io/${{ github.repository_owner }}/bb-http-map:latest bb --config ship.edn run-function
           if [ "$(docker exec bb-http-map curl -X POST -d '{"foo": "bar", "spam": "eggs"}' -H 'content-type: application/json' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"]]' ]; then
+            docker logs bb-http-map
             exit 7
           fi
 
           (docker stop bb-http-map-context || exit 0)
           (docker rm bb-http-map-context || exit 0)
-          docker run -d --name bb-http-map-context ghcr.io/${{ github.repository_owner }}/bb-http-map-context:latest bb --main index
+          docker run -d --name bb-http-map-context ghcr.io/${{ github.repository_owner }}/bb-http-map-context:latest bb --config ship.edn run-function
           if [ "$(docker exec bb-http-map-context curl -X POST -d '{"foo": "bar", "spam": "eggs"}' -H 'content-type: application/json' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo","spam"],["bar","eggs"],"application/json","http://127.0.0.1:8082"]' ]; then
+            docker logs bb-http-map-context
             exit 8
           fi
 
           (docker stop bb-routes || exit 0)
           (docker rm bb-routes || exit 0)
-          docker run -d --name bb-routes ghcr.io/${{ github.repository_owner }}/bb-routes:latest bb --main index
+          docker run -d --name bb-routes ghcr.io/${{ github.repository_owner }}/bb-routes:latest bb --config ship.edn run-function
           if [ "$(docker exec bb-routes curl -X GET --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082/foo)" != 'foo' ]; then
+            docker logs bb-routes
             exit 9
           fi
 
           (docker stop bb-routes-bell || exit 0)
           (docker rm bb-routes-bell || exit 0)
-          docker run -d --name bb-routes-bell ghcr.io/${{ github.repository_owner }}/bb-routes-bell:latest bb --main index
+          docker run -d --name bb-routes-bell ghcr.io/${{ github.repository_owner }}/bb-routes-bell:latest bb --config ship.edn run-function
           if [ "$(docker exec bb-routes-bell curl -X POST -d '{"foo": "bar"}' -H 'content-type: application/json' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo"],["bar"]]' ]; then
+            docker logs bb-routes-bell
             exit 10
           fi
           if [ "$(docker exec bb-routes-bell curl -X PUT --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082/foo/123)" != '[["id"],["123"]]' ]; then
+            docker logs bb-routes-bell
             exit 11
           fi
 
           (docker stop bb-hiccup || exit 0)
           (docker rm bb-hiccup || exit 0)
-          docker run -d --name bb-hiccup ghcr.io/${{ github.repository_owner }}/bb-hiccup:latest bb --main index
+          docker run -d --name bb-hiccup ghcr.io/${{ github.repository_owner }}/bb-hiccup:latest bb --config ship.edn run-function
           bb_hiccup_output=$(docker exec bb-hiccup curl -X GET -d '{"item-list": ["foo","bar","spam"]}' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)
           if [[ "${bb_hiccup_output:0:5}" != "<html" ]]; then
+            docker logs bb-hiccup
             exit 12
           fi

@@ -1,2 +1,1 @@
-{:paths ["."]
- :deps {net.tessellator/bell {:mvn/version "0.2.0"}}}
+{:deps {net.tessellator/bell {:mvn/version "0.2.0"}}}
