@@ -21,28 +21,29 @@ RUN addgroup --system app && adduser --system --ingroup app app && \
 USER app
 WORKDIR $HOME
 
-COPY --chown=app:app index.clj bb.edn lib with-bb-deps.clj ./
+COPY --chown=app:app index.clj bb.edn lib merge_config.clj ./
 
 COPY --chown=app:app function/bb.edn* function/bb.edn
-RUN ./with-bb-deps.clj --src "function/bb.edn" --out "ship.edn" && \
+RUN bb merge-config --src "function/bb.edn" --out "ship.edn" && \
     bb --config ship.edn prepare && \
     bb --config ship.edn print-deps && \
-    cp -rv .m2 .m2-ship
+    cp -r .m2 .m2-ship
 
 COPY --chown=app:app function/test/bb.edn* function/test/bb.edn
 RUN if [ "$TEST" != false ]; then \
-      ./with-bb-deps.clj --src "function/bb.edn" --test "function/test/bb.edn" --out "test.edn" && \
+      bb merge-config --src "function/bb.edn" --test "function/test/bb.edn" --out "test.edn" && \
       bb --config test.edn prepare && \
       bb --config test.edn print-deps; \
     fi
 
 COPY --chown=app:app function function
 
-RUN if [ "$TEST" != false ] && [ -d "$TEST_DIR" ]; then \
+RUN if [ "$TEST" != false ]; then \
+      bb merge-config --src "function/bb.edn" --test "function/test/bb.edn" --out "test.edn" && \
       bb --config test.edn test; \
     fi && \
-    rm -rv .m2 && mv .m2-ship .m2 && \
-    rm -rf with-bb-deps.clj function/bb.edn "$TEST_DIR"
+    rm -r .m2 && mv .m2-ship .m2 && \
+    rm -rf merge_config.clj function/bb.edn "$TEST_DIR"
 
 FROM build AS ship
 
