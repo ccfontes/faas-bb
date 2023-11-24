@@ -1,5 +1,5 @@
-FROM ghcr.io/openfaas/of-watchdog:0.9.12 AS watchdog
-FROM babashka/babashka:1.3.182 AS babashka
+FROM ghcr.io/openfaas/of-watchdog:0.9.13 AS watchdog
+FROM babashka/babashka:1.3.186 AS babashka
 FROM clojure:tools-deps-1.11.1.1347 AS build
 
 RUN set -e
