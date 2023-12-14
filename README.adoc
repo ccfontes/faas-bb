@@ -95,10 +95,6 @@ In `bb-streaming` language:
 ----
 The `event` is extracted from the HTTP payload body, and the function return is used as the HTTP payload body for the response.
 
-=== Adding namespaces
-
-Namespace for each babashka source file created side by side with `handler.clj` must also be prefixed with `function.` Example: when creating a `view.clj` file in the same directory as `handler.clj`, namespace is `function.view`.
-
 === Function tests
 
 To test the code of a Function, a `test` directory in the Function's top-level directory is provided, containing:
