@@ -1,4 +1,4 @@
 (ns function.handler)
 
-(defn handler [_]
+(defn handler [_event]
   "Hello OpenFaaS!")

@@ -22,7 +22,7 @@ An https://github.com/openfaas[OpenFaaS] template for writing Functions in https
 To create Babashka Functions with this template, use the following command *once*:
 [source, bash]
 ----
-faas template pull https://github.com/ccfontes/faas-bb
+faas-cli template pull https://github.com/ccfontes/faas-bb
 ----
 If you ever need to update the template, simply run the command above with the `--overwrite` flag.
 
@@ -33,7 +33,7 @@ Two languages are supported: `bb` (HTTP mode) and `bb-streaming`.
 Create Babashka Functions as with the following command example:
 [source, bash]
 ----
-faas new --lang bb my-bb-function
+faas-cli new --lang bb my-bb-function
 ----
 `of-watchdog` mode here is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
 
