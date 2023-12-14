@@ -10,7 +10,7 @@
     [ring.middleware.headers :refer [wrap-lowercase-headers wrap-friendly-headers]]
     [ring.util.walk :as ring-walk]
     [compojure.response :as response]
-    [function.handler :as function]))
+    [handler :as function]))
 
 (def keywords? #(if (nil? %) true %))
 

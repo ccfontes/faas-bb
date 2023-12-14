@@ -37,19 +37,11 @@ faas-cli new --lang bb my-bb-function
 ----
 `of-watchdog` mode here is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
 
-* a `function.handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
-* a `bb.edn` file where ship dependencies can be added. Remove this file if you don't need to add any dependencies.
+* a `handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
+* a `bb.edn` file where ship dependencies can be added. Remove this file if you don't need to add any dependencies or run a REPL without passing the classpath explicitly.
 * a `test` directory containing:
 ** `run_tests.clj` with the namespace that will be used to run the tests. You can use any test library and test runner you like.
-** a `bb.edn` file where test dependencies can be added. Remove this file if you don't need to add any dependencies.
-
-Although the Function namespace is called `function.handler`, the directory path to the Function handler can be named anything you want. Example:
-[source, yml]
-----
-my-function:
-  handler: ./anything/you-want
-  ...
-----
+** a `bb.edn` file where test dependencies can be added. Remove this file if you don't need to add any dependencies or run a REPL without passing the classpath explicitly.
 
 === Defining Function handler
 
@@ -128,6 +120,24 @@ my-function:
 If you don't plan on testing, you can remove the `test` directory altogether.
 
 Existing test files are removed from the final Docker image used to run the Function in OpenFaaS.
+
+=== Spin up a REPL
+
+In the root directory of your function run:
+[source, bash]
+----
+rlwrap bb
+----
+
+Spins up a Babashka REPL in the context of your Function, with readline support.
+
+If you remove `bb.edn` with just `{:paths ["."]}` in it, the Function will still work, but then you will need to explicitly pass the classpath when spinning up a REPL:
+
+[source, bash]
+----
+rlwrap bb -cp .
+----
+
 
 == link:examples[Function examples]
 

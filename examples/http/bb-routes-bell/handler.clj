@@ -1,4 +1,4 @@
-(ns function.handler
+(ns handler
   (:require [bell.core :refer [router POST PUT]]))
 
 (def handler
