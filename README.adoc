@@ -131,7 +131,7 @@ rlwrap bb
 
 Spins up a Babashka REPL in the context of your Function, with readline support.
 
-If you remove `bb.edn` with just `{:paths ["."]}` in it, the Function will still work, but then you will need to explicitly pass the the classpath when spinning up a REPL:
+If you remove `bb.edn` with just `{:paths ["."]}` in it, the Function will still work, but then you will need to explicitly pass the classpath when spinning up a REPL:
 
 [source, bash]
 ----
