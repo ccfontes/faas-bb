@@ -16,7 +16,7 @@ See https://docs.openfaas.com/tutorials/first-python-function/[OpenFaaS website]
 Get the Babashka OpenFaaS template:
 [source, bash]
 ----
-faas template pull https://github.com/ccfontes/faas-bb
+faas-cli template pull https://github.com/ccfontes/faas-bb
 ----
 
 == Environment variables
@@ -32,7 +32,7 @@ Check link:stack.yml[stack.yml] to find out how `DOCKER_REGISTRY_IMG_ORG_PATH` i
 To build and deploy the Functions to OpenFaaS, run the following command:
 [source, bash]
 ----
-faas up
+faas-cli up
 ----
 
 == Testing a function ==
@@ -40,6 +40,6 @@ faas up
 Test a Function using the OpenFaaS UI or with the following command:
 [source, bash]
 ----
-echo "world" | faas invoke bb-http-hello
+echo "world" | faas-cli invoke bb-http-hello
 ----
 Should ouput `"Hello, world"` string to the terminal.
