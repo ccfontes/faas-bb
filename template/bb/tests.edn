@@ -1,2 +1,2 @@
-{:paths ["." "lib"]
+{:paths ["." "lib" "function"]
  :deps {eg/eg {:mvn/version "0.5.6-alpha"}}}
