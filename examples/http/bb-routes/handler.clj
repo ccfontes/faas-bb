@@ -1,4 +1,4 @@
-(ns function.handler)
+(ns handler)
 
 (defn handler [{:keys [request-method uri]}]
   (case [request-method uri]

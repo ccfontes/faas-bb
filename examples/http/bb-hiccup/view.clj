@@ -1,4 +1,4 @@
-(ns function.view
+(ns view
   (:require [hiccup2.core :refer [html]]))
 
 (defn ->item-list [lst]
