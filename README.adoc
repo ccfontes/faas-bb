@@ -123,7 +123,7 @@ Existing test files are removed from the final Docker image used to run the Func
 
 === Spin up a REPL
 
-In the root directory of your function run:
+In the root directory of your Function run:
 [source, bash]
 ----
 rlwrap bb

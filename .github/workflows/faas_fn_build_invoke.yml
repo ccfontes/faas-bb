@@ -18,17 +18,17 @@ jobs:
         run: |
           mkdir test
           cd test
-          faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }} 
+          faas-cli template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }} 
 
-          faas new --lang bb-streaming my-bb-streaming-function --prefix ghcr.io/${{ github.repository_owner }}
-          faas build -f my-bb-streaming-function.yml
+          faas-cli new --lang bb-streaming my-bb-streaming-function --prefix ghcr.io/${{ github.repository_owner }}
+          faas-cli build -f my-bb-streaming-function.yml
           if [ "$(echo "Hello world" | docker run -i ghcr.io/${{ github.repository_owner }}/my-bb-streaming-function:latest ./index.clj)" != "Hello world" ]; then
             docker logs my-bb-streaming-function
             exit 1
           fi
 
-          faas new --lang bb my-bb-http-function --prefix ghcr.io/${{ github.repository_owner }}
-          faas build -f my-bb-http-function.yml
+          faas-cli new --lang bb my-bb-http-function --prefix ghcr.io/${{ github.repository_owner }}
+          faas-cli build -f my-bb-http-function.yml
           (docker stop my-bb-http-function || exit 0)
           (docker rm my-bb-http-function || exit 0)
           docker run -d --name my-bb-http-function ghcr.io/${{ github.repository_owner }}/my-bb-http-function:latest bb --config ship.edn run-function
@@ -44,8 +44,8 @@ jobs:
           cd faas-bb
           git checkout ${{ github.head_ref || github.ref_name }}
           cd examples
-          faas template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }}
-          faas build
+          faas-cli template pull https://github.com/${{ github.repository_owner }}/faas-bb#${{ github.head_ref || github.ref_name }}
+          faas-cli build
 
           if [ "$(echo world | docker run -i ghcr.io/${{ github.repository_owner }}/bb-streaming-hello:latest ./index.clj)" != "Hello, world" ]; then
               docker logs bb-streaming-hello
