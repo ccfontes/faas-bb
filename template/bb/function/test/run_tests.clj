@@ -1,4 +1,4 @@
-(ns function.test.run-tests
+(ns test.run-tests
   (:require [clojure.test :refer [run-tests]]))
 
 (defn -main []

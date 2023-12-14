@@ -37,7 +37,6 @@ RUN if [ "$TEST" != false ]; then \
     fi
 
 COPY --chown=app:app function function
-
 RUN if [ "$TEST" != false ]; then \
       bb merge-config --src "function/bb.edn" --test "function/test/bb.edn" --out "test.edn" && \
       bb --config test.edn test; \
