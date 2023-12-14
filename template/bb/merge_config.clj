@@ -13,6 +13,6 @@
         (-> "bb.edn" slurp edn/read-string)
         (or
           (merge-with merge
-            (when (fs/exists? src) (-> src slurp edn/read-string))
-            (when (fs/exists? test) (-> test slurp edn/read-string)))
+            (when (fs/exists? src) (-> src slurp edn/read-string (select-keys [:deps])))
+            (when (fs/exists? test) (-> test slurp edn/read-string (select-keys [:deps]))))
           {})))))
