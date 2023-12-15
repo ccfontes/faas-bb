@@ -9,11 +9,24 @@
 
 = faas-bb image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}] image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}] image:{img-license}[link=LICENSE]
 
-An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://github.com/babashka/babashka[Babashka].
+An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://babashka.org[Babashka].
+
+== Why Babashka for OpenFaaS?
+
+Why Babashka for OpenFaaS instead of Clojure proper?:
+
+- Babashka scripts run immediately, ensuring that Function cold start times are kept to a minimum.
+- Babashka is designed for minimal memory usage, allowing you to scale up your Functions without excessively consuming RAM.
+- Babashka comes with batteries included, making it easier to write new Functions without having to add the same basic dependencies over and over again.
 
 == Prerequisites
 
-* https://docs.openfaas.com/cli/install/[OpenFaaS CLI]: makes the `faas` command available.
+* https://docs.openfaas.com/cli/install/[OpenFaaS CLI]: makes the `faas-cli` command available.
+
+Optional for REPL support:
+
+* https://github.com/babashka/babashka#installation[Babashka]: Fast native Clojure scripting runtime.
+* rlwrap: readline support, here for Babashka REPL.
 
 == Usage
 
@@ -118,6 +131,8 @@ If you don't plan on testing, you can remove the `test` directory altogether.
 Existing test files are removed from the final Docker image used to run the Function in OpenFaaS.
 
 === Spin up a REPL
+
+You'll need to install Babashka locally to spin up a REPL environment.
 
 In the root directory of your Function run:
 [source, bash]
