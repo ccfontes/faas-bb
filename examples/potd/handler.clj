@@ -13,5 +13,6 @@
 (defn choose-rand-proverb []
   (nth proverbs (rand-int (count proverbs))))
 
-(defn handler []
-  (choose-rand-proverb))
+(defn handler
+  "Use case for no args handler"
+  [] (choose-rand-proverb))

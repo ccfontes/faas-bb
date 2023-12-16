@@ -42,4 +42,4 @@ functions:
   potd:
     lang: bb
     handler: ./potd
-    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/potd:latest
+    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-potd:latest

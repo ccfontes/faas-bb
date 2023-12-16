@@ -52,7 +52,7 @@ faas-cli new --lang bb my-bb-function
 ----
 `of-watchdog` mode here is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
 
-* a `handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
+* a `handler` namespace that is required for the template to work properly. This namespace needs to have a top-level `handler` function with 0 or 1 arguments.
 * a `bb.edn` file where ship dependencies can be added. Remove this file if you don't need to add any dependencies or run a REPL without passing the classpath explicitly.
 * a `test` directory containing:
 ** `run_tests.clj` with the namespace that will be used to run the tests. You can use any test library and test runner you like.

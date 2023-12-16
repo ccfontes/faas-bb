@@ -14,6 +14,14 @@
 
 (def keywords? #(if (nil? %) true %))
 
+(def fn-arg-cnt (comp count first :arglists meta))
+
+(defn wrap-arg [f-var]
+  (let [f (var-get f-var)]
+    (case (fn-arg-cnt f-var)
+      0 (fn [_] (f))
+      1 f)))
+
 (defn ->handler [f env]
   (fn [request]
     (response/render f
@@ -27,7 +35,8 @@
     (wrap-lowercase-headers)))
 
 (defn -main []
-  (let [env (ring-walk/format-context (System/getenv))]
-    (run-server (->app function/handler env)
+  (let [env (ring-walk/format-context (System/getenv))
+        faas-fn (wrap-arg #'function/handler)]
+    (run-server (->app faas-fn env)
                 {:port 8082})
     @(promise)))
