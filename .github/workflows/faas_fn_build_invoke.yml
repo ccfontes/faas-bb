@@ -128,7 +128,7 @@ jobs:
           (docker rm bb-potd || exit 0)
           docker run -d --name bb-potd ghcr.io/${{ github.repository_owner }}/bb-potd:latest bb --config ship.edn run-function
           bb_potd=$(docker exec bb-potd curl -X GET --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)
-          if [[ echo "${#bb_potd}" -gt 31 ]]; then
+          if [[ ${#bb_potd} -gt 31 ]]; then
             docker logs bb-potd
             exit 13
           fi
