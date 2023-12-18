@@ -21,6 +21,7 @@ COPY --chown=app:app index.clj bb.edn lib merge_config.clj ./
 
 COPY --chown=app:app function/bb.edn* function/bb.edn
 RUN bb merge-config --src "function/bb.edn" --out "ship.edn" && \
+    mkdir ~/.m2 && \
     bb --config ship.edn prepare && \
     bb --config ship.edn print-deps && \
     cp -r .m2 .m2-ship
