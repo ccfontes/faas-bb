@@ -14,7 +14,7 @@
 
 (def keywords? #(if (nil? %) true %))
 
-(def fn-arg-cnt (comp count first :arglists meta))
+(def fn-arg-cnt #(some-> % meta :arglists first count))
 
 (defn wrap-arg [f-var]
   (let [f (var-get f-var)]

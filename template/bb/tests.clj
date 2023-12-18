@@ -58,10 +58,13 @@
   {} => {}
   {"Foo-baR" "abc"} => {"foo-bar" "abc"})
 
+(def def-has-no-arglists (fn [_]))
+
 (eg index/fn-arg-cnt
   #'clojure-version => 0
   #'identity => 1
-  #'compare => 2)
+  #'compare => 2
+  #'def-has-no-arglists => nil)
 
 (eg index/wrap-arg
   #'clojure-version => #(string? (% 10))
