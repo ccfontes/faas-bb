@@ -43,3 +43,10 @@ functions:
     lang: bb
     handler: ./potd
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-potd:latest
+
+configuration:
+  templates:
+    - name: bb
+      source: https://github.com/ccfontes/faas-bb
+    - name: bb-streaming
+      source: https://github.com/ccfontes/faas-bb

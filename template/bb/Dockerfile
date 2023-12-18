@@ -12,6 +12,7 @@ ENV PATH="$PATH:/usr/local/bin"
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 COPY --from=babashka /usr/local/bin/bb /usr/local/bin/bb
 
+# /root/.m2 provides: clojure, core.specs.alpha, and spec.alpha
 RUN addgroup --system app && adduser --system --ingroup app app && \
     mkdir -p $HOME/.deps.clj/1.11.1.1347/ClojureTools && \
     mv /root/.m2 $HOME && \

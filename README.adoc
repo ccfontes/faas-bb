@@ -19,7 +19,7 @@ Why Babashka for OpenFaaS instead of Clojure proper?:
 ** that Function cold start times are kept to a minimum.
 ** a rapid development feedback loop.
 ** a simple REPL workflow - just start everything all over again, it's fast.
-* Babashka is designed for minimal memory usage, allowing you to scale up your Functions without excessively consuming RAM.
+* Babashka is designed for minimal memory usage, allowing you to scale up your single-purpose functions with comparable RAM consumption.
 
 == Prerequisites
 
@@ -56,7 +56,7 @@ faas-cli new --lang bb my-bb-function
 * a `bb.edn` file where ship dependencies can be added. Remove this file if you don't need to add any dependencies or run a REPL without passing the classpath explicitly.
 * a `test` directory containing:
 ** `run_tests.clj` with the namespace that will be used to run the tests. You can use any test library and test runner you like.
-** a `bb.edn` file where test dependencies can be added. Remove this file if you don't need to add any dependencies or run a REPL without passing the classpath explicitly.
+** a `bb.edn` file where test dependencies can be added. Remove this file if you don't need to add any dependencies.
 
 === Defining Function handler
 
