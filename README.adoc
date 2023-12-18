@@ -25,9 +25,9 @@ Why Babashka for OpenFaaS instead of Clojure proper?:
 
 * https://docs.openfaas.com/cli/install/[OpenFaaS CLI]: makes the `faas-cli` command available.
 
-Optional for REPL support:
+*Optional for REPL support*
 
-* https://github.com/babashka/babashka#installation[Babashka]: Fast native Clojure scripting runtime.
+* https://github.com/babashka/babashka#installation[Babashka]: makes the `bb` command available.
 * rlwrap: readline support, here for Babashka REPL.
 
 == Usage
@@ -52,7 +52,7 @@ faas-cli new --lang bb my-bb-function
 ----
 `of-watchdog` mode here is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
 
-* a `handler` namespace that is required for the template to work properly. The requirement for this namespace is to have a top-level function defined as `handler`.
+* a `handler` namespace that is required for the template to work properly. This namespace needs to have a top-level `handler` function with 0 or 1 arguments.
 * a `bb.edn` file where ship dependencies can be added. Remove this file if you don't need to add any dependencies or run a REPL without passing the classpath explicitly.
 * a `test` directory containing:
 ** `run_tests.clj` with the namespace that will be used to run the tests. You can use any test library and test runner you like.
@@ -106,7 +106,8 @@ my-function:
 In `bb-streaming` language:
 [source, clojure]
 ----
-(defn handler [event] ...)
+(defn handler [event]
+  ...)
 ----
 The `event` is extracted from the HTTP payload body, and the function return is used as the HTTP payload body for the response.
 
@@ -134,7 +135,9 @@ Existing test files are removed from the final Docker image used to run the Func
 
 === Spin up a REPL
 
-You'll need to install Babashka locally to spin up a REPL environment.
+Spin up a REPL in the context of your Function project.
+
+NOTE: You'll need to have https://github.com/babashka/babashka#installation[Babashka installed] in your local.
 
 In the root directory of your Function run:
 [source, bash]
@@ -142,7 +145,7 @@ In the root directory of your Function run:
 rlwrap bb
 ----
 
-Spins up a Babashka REPL in the context of your Function, with readline support.
+Spins up a REPL with readline support.
 
 If you remove `bb.edn` with just `{:paths ["."]}` in it, the Function will still work, but then you will need to explicitly pass the classpath when spinning up a REPL:
 
@@ -183,14 +186,7 @@ The template may benefit from some common middleware functions, such as those of
 
 == Third party code
 
-The following files are derived from https://github.com/ring-clojure[ring] to work with Babashka, originally authored by James Reeves and contributors, and used under the MIT license:
-
-* link:template/bb/lib/ring/middleware/json.clj[ring.middleware.json]
-* link:template/bb/lib/ring/util/io.clj[ring.util.io]
-* link:template/bb/lib/ring/util/mime_type.clj[ring.util.mime-type]
-* link:template/bb/lib/ring/util/parsing.clj[ring.util.parsing]
-* link:template/bb/lib/ring/util/response.clj[ring.util.response]
-* link:template/bb/lib/ring/util/time.clj[ring.util.time]
+The following files are derived from https://github.com/ring-clojure[ring] to work with Babashka, originally authored by James Reeves and contributors, and used under the MIT license: link:template/bb/lib/ring/middleware/json.clj[ring.middleware.json], link:template/bb/lib/ring/util/io.clj[ring.util.io], link:template/bb/lib/ring/util/mime_type.clj[ring.util.mime-type], link:template/bb/lib/ring/util/parsing.clj[ring.util.parsing], link:template/bb/lib/ring/util/response.clj[ring.util.response], link:template/bb/lib/ring/util/time.clj[ring.util.time]
 
 == link:LICENSE[License]
 
