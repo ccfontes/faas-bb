@@ -46,7 +46,5 @@ functions:
 
 configuration:
   templates:
-    - name: bb
-      source: https://github.com/ccfontes/faas-bb
-    - name: bb-streaming
+    - name: faas-bb
       source: https://github.com/ccfontes/faas-bb
