@@ -20,7 +20,7 @@
   (let [f (var-get f-var)]
     (case (fn-arg-cnt f-var)
       0 (fn [_] (f))
-      1 f)))
+      f)))
 
 (defn ->handler [f env]
   (fn [request]
