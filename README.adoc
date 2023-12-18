@@ -9,7 +9,7 @@
 
 = faas-bb image:{img-ci-tests-status}[link={url-ci-status-tests}] image:{img-ci-hadolint-status}[link={url-ci-status-hadolint}] image:{img-ci-clj-kondo-status}[link={url-ci-status-clj-kondo}] image:{img-license}[link=LICENSE]
 
-An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://babashka.org[Babashka].
+An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://babashka.org[Babashka] (v1.3.186).
 
 == Why Babashka for OpenFaaS?
 
