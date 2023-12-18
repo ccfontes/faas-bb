@@ -43,3 +43,8 @@ functions:
     lang: bb
     handler: ./potd
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-potd:latest
+
+configuration:
+  templates:
+    - name: faas-bb
+      source: https://github.com/ccfontes/faas-bb
