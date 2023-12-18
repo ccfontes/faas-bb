@@ -1,10 +1,8 @@
 (ns handler
-  (:require [bell.core :refer [router POST PUT]]))
+  (:require [bell.core :refer [router GET]]))
 
 (def handler
   (router
-    (POST "/" (fn [{:keys [body]}]
-                [(keys body) (vals body)]))
-    (PUT "/foo/:id"
+    (GET "/foo/:id"
          (fn [{:keys [path-params]}]
            [(keys path-params) (vals path-params)]))))

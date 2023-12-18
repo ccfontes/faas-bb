@@ -11,14 +11,6 @@ See https://docs.openfaas.com/tutorials/first-python-function/[OpenFaaS website]
 * https://docs.openfaas.com/cli/install/[OpenFaaS CLI]
 * OpenFaaS: to try in localhost, maybe provision https://github.com/openfaas/faasd[faasd]
 
-== Get OpenFaaS template ==
-
-Get the Babashka OpenFaaS template:
-[source, bash]
-----
-faas-cli template pull https://github.com/ccfontes/faas-bb
-----
-
 == Environment variables
 
 [source, bash]

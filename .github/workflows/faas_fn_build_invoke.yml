@@ -66,13 +66,6 @@ jobs:
 
           (docker stop bb-http-hello || exit 0)
           (docker rm bb-http-hello || exit 0)
-          echo "content of ship.edn and function/handler.clj"
-          docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest cat ship.edn
-          (docker stop bb-http-hello || exit 0)
-          (docker rm bb-http-hello || exit 0)
-          docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest cat function/handler.clj
-          (docker stop bb-http-hello || exit 0)
-          (docker rm bb-http-hello || exit 0)
           docker run -d --name bb-http-hello ghcr.io/${{ github.repository_owner }}/bb-http-hello:latest bb --config ship.edn run-function
           if [ "$(docker exec bb-http-hello curl -X GET --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != 'Hello OpenFaaS!' ]; then
             docker logs bb-http-hello
@@ -106,11 +99,7 @@ jobs:
           (docker stop bb-routes-bell || exit 0)
           (docker rm bb-routes-bell || exit 0)
           docker run -d --name bb-routes-bell ghcr.io/${{ github.repository_owner }}/bb-routes-bell:latest bb --config ship.edn run-function
-          if [ "$(docker exec bb-routes-bell curl -X POST -d '{"foo": "bar"}' -H 'content-type: application/json' --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082)" != '[["foo"],["bar"]]' ]; then
-            docker logs bb-routes-bell
-            exit 10
-          fi
-          if [ "$(docker exec bb-routes-bell curl -X PUT --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082/foo/123)" != '[["id"],["123"]]' ]; then
+          if [ "$(docker exec bb-routes-bell curl -X GET --retry 3 --retry-delay 2 --retry-connrefused http://127.0.0.1:8082/foo/123)" != '[["id"],["123"]]' ]; then
             docker logs bb-routes-bell
             exit 11
           fi
