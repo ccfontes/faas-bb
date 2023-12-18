@@ -5,10 +5,10 @@
     [handler :refer [handler]]))
 
 (eg handler
-  {:request-method :get :uri "/"} "root")
+  {:uri "/" :request-method :get} "root")
 
 (eg handler
-  {:request-method :get :uri "/foo"} "foo")
+  {:uri "/foo" :request-method :get} "foo")
 
 (defn -main []
   (let [{:keys [fail error]} (run-tests 'test.run-tests)]
