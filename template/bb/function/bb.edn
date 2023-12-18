@@ -1,2 +1,3 @@
 {:paths ["."]
- :deps {}}
+ :deps {}
+ :tasks {test test.run-tests/-main}}

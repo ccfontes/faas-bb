@@ -95,6 +95,9 @@ jobs:
             docker logs bb-routes
             exit 9
           fi
+          pushd examples/http/bb-routes
+          bb test
+          popd
 
           (docker stop bb-routes-bell || exit 0)
           (docker rm bb-routes-bell || exit 0)

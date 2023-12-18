@@ -113,6 +113,14 @@ The `event` is extracted from the HTTP payload body, and the function return is 
 
 === Function tests
 
+Tests for your Function run when you build the Function image (`faas-cli build`).
+
+To run tests without building the Function's docker image, use the following command in the root directory of your Function:
+[source, bash]
+----
+bb test
+----
+
 To test the code of a Function, a `test` directory in the Function's top-level directory is provided, containing:
 
 * `run_tests.clj`, with the namespace that will be used to run the tests. You can use any test library and test runner you like.
@@ -131,7 +139,7 @@ my-function:
 
 If you don't plan on testing, you can remove the `test` directory altogether.
 
-Existing test files are removed from the final Docker image used to run the Function in OpenFaaS.
+Existing test files are removed from the final Docker image used to deploy the Function to OpenFaaS.
 
 === Spin up a REPL
 
