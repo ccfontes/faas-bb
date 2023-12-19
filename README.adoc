@@ -13,7 +13,7 @@ An https://github.com/openfaas[OpenFaaS] template for writing Functions in https
 
 == Why
 
-> The ergonomics of Babashka, combined with the simplicity and reach of Clojure, make it a great choice for writing Functions in OpenFaaS, from single purpose Functions, to REST APIs, to serving hiccup backed HTML pages - delivered with a back-to-back joyful development experience.
+> The ergonomics of Babashka, combined with the simplicity, make it a great choice for writing Functions in OpenFaaS, from single purpose Functions, to frontend facing REST APIs, to serving hiccup backed HTML pages - delivered with a back-to-back joyful development experience.
 
 Babashka is designed for minimal memory usage, allowing you to scale up your narrow-purposed Functions with comparable RAM consumption.
 
@@ -45,14 +45,12 @@ If you ever need to update the template, simply run the command above with the `
 
 === Create a Babashka Function
 
-Two languages are supported: `bb` (HTTP mode) and `bb-streaming`.
-
 Create Babashka Functions as with the following command example:
 [source, bash]
 ----
 faas-cli new --lang bb my-bb-function
 ----
-`of-watchdog` mode here is HTTP. A new project is created for a function defined as `my-bb-function`. It will contain:
+A new project is created for a function defined as `my-bb-function`. It will contain:
 
 * a `handler` namespace that is required for the template to work properly. This namespace needs to have a top-level `handler` function with 0 or 1 arguments.
 * a `bb.edn` file where ship dependencies can be added. Remove this file if you don't need to add any dependencies or run a REPL without passing the classpath explicitly.
@@ -130,14 +128,6 @@ becomes this in the `:context` map:
 {:foo "bar" :spam "eggs"}
 ----
 
-In `bb-streaming` language:
-[source, clojure]
-----
-(defn handler [event]
-  ...)
-----
-The `event` is extracted from the HTTP payload body, and the function return is used as the HTTP payload body for the response.
-
 === Function tests
 
 Tests for your Function run when you build the Function image (`faas-cli build`).
@@ -182,7 +172,6 @@ If you remove `bb.edn` with just `{:paths ["."]}` in it, the Function will still
 ----
 rlwrap bb -cp .
 ----
-
 
 == link:examples[Function examples]
 

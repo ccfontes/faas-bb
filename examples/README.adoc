@@ -1,12 +1,10 @@
-= OpenFaaS Functions in Babashka =
+= OpenFaaS Functions in Babashka
 
-Go into the link:http[http] and link:streaming[streaming] directories to find the Babashka Function code examples.
-
-The following documentation explains how to run these Functions in OpenFaaS.
+This directory contains Function examples that can be run in OpenFaaS using the following instructions.
 
 See https://docs.openfaas.com/tutorials/first-python-function/[OpenFaaS website] for more detailed and up to date documentation.
 
-== Prerequisites ==
+== Prerequisites
 * Docker
 * https://docs.openfaas.com/cli/install/[OpenFaaS CLI]
 * OpenFaaS: to try in localhost, maybe provision https://github.com/openfaas/faasd[faasd]
@@ -19,7 +17,7 @@ export DOCKER_REGISTRY_IMG_ORG_PATH=<registry org path>
 ----
 Check link:stack.yml[stack.yml] to find out how `DOCKER_REGISTRY_IMG_ORG_PATH` is used.
 
-== Building and deploying your function ==
+== Building and deploying your function
 
 To build and deploy the Functions to OpenFaaS, run the following command:
 [source, bash]
@@ -27,7 +25,7 @@ To build and deploy the Functions to OpenFaaS, run the following command:
 faas-cli up
 ----
 
-== Testing a function ==
+== Testing a function
 
 Test a Function using the OpenFaaS UI or with the following command:
 [source, bash]

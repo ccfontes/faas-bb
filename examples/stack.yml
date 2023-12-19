@@ -3,41 +3,33 @@ provider:
   name: openfaas
   gateway: http://127.0.0.1:8080
 functions:
-  bb-streaming-hello:
-    lang: bb-streaming
-    handler: ./streaming/bb-hello
-    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-streaming-hello
-  bb-streaming-lib:
-    lang: bb-streaming
-    handler: ./streaming/bb-lib
-    image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-streaming-lib
   bb-http-hello:
     lang: bb
-    handler: ./http/bb-hello
+    handler: ./bb-hello
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-hello
   bb-http-map:
     lang: bb
-    handler: ./http/bb-map
+    handler: ./bb-map
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-map
     environment:
       keywords: false
   bb-http-map-context:
     lang: bb
-    handler: ./http/bb-map-context
+    handler: ./bb-map-context
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-http-map-context
     environment:
       keywords: true
   bb-routes:
     lang: bb
-    handler: ./http/bb-routes
+    handler: ./bb-routes
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-routes
   bb-routes-bell:
     lang: bb
-    handler: ./http/bb-routes-bell
+    handler: ./bb-routes-bell
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-routes-bell
   bb-hiccup:
     lang: bb
-    handler: ./http/bb-hiccup
+    handler: ./bb-hiccup
     image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/bb-hiccup
   potd:
     lang: bb
