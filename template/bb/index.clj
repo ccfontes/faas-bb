@@ -9,8 +9,27 @@
     [ring.middleware.text :refer [wrap-text-body]]
     [ring.middleware.headers :refer [wrap-lowercase-headers wrap-friendly-headers]]
     [ring.util.walk :as ring-walk]
+    [ring.util.string :as ring-string]
     [compojure.response :as response]
+    [babashka.fs :as fs]
+    [clojure.string :as str]
+    [clojure.edn :as edn]
     [handler :as function]))
+
+(defn ->secret [filepath secret-raw]
+  (let [secret (edn/read-string secret-raw)]
+    (if (map? secret)
+      secret
+      (let [secret-key (-> filepath fs/file-name keyword)]
+        {secret-key (ring-string/read-string secret-raw)}))))
+
+(defn ->secrets []
+  (when (fs/exists? "/var/openfaas/secrets")
+    (->> (fs/list-dir "/var/openfaas/secrets")
+      (map #(let [filepath (-> % str)
+                  secret-raw (slurp filepath)]
+             (->secret filepath secret-raw)))
+      (apply merge))))
 
 (def keywords? #(if (nil? %) true %))
 
@@ -36,7 +55,8 @@
 
 (defn -main []
   (let [env (ring-walk/format-context (System/getenv))
+        context (merge env (->secrets))
         faas-fn (wrap-arg #'function/handler)]
-    (run-server (->app faas-fn env)
+    (run-server (->app faas-fn context)
                 {:port 8082})
     @(promise)))

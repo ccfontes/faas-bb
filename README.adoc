@@ -19,7 +19,7 @@ Why Babashka for OpenFaaS instead of Clojure proper?:
 ** that Function cold start times are kept to a minimum.
 ** a rapid development feedback loop.
 ** a simple REPL workflow - just start everything all over again, it's fast.
-* Babashka is designed for minimal memory usage, allowing you to scale up your single-purpose functions with comparable RAM consumption.
+* Babashka is designed for minimal memory usage, allowing you to scale up your single-purpose Functions with comparable RAM consumption.
 
 == Prerequisites
 
@@ -103,6 +103,31 @@ my-function:
   :my-env2 2}
 ----
 
+If you declare secrets in the `stack.yml` file, these will be available in `:context` map as well. Let's start with an example:
+[source, yml]
+----
+my-function:
+  lang: bb
+  handler: ./anything/my-function
+  image: ${DOCKER_REGISTRY_IMG_ORG_PATH}/my-function
+  secrets:
+    - foo
+    - baz
+----
+A secret value that is an EDN string, when internally parsed as a Clojure map, will have its content spliced into the `:context` map. Otherwise, the secret will be available in the `:context` map as `{:secret-name <secret-value>}`, with `<secret-value>` parsed as a Clojure data structure other than a map.
+
+Following up from the definition of `my-function` above, we define the following secrets:
+[source, bash]
+----
+echo 'bar' | faas-cli secret create foo
+echo '{:spam "eggs"}' | faas-cli secret create baz
+----
+becomes this in the `:context` map:
+[source, clojure]
+----
+{:foo "bar" :spam "eggs"}
+----
+
 In `bb-streaming` language:
 [source, clojure]
 ----
@@ -113,7 +138,9 @@ The `event` is extracted from the HTTP payload body, and the function return is 
 
 === Function tests
 
-To test the code of a Function, a `test` directory in the Function's top-level directory is provided, containing:
+Tests for your Function run when you build the Function image (`faas-cli build`).
+
+A `test` directory in the Function's top-level directory is provided, containing:
 
 * `run_tests.clj`, with the namespace that will be used to run the tests. You can use any test library and test runner you like.
 * a `bb.edn` file where test dependencies can be added. Remove this file if you don't need to add any dependencies.
