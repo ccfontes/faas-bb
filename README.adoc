@@ -11,15 +11,17 @@
 
 An https://github.com/openfaas[OpenFaaS] template for writing Functions in https://babashka.org[Babashka] (v1.3.186).
 
-== Why Babashka for OpenFaaS?
+== Why
 
-Why Babashka for OpenFaaS instead of Clojure proper?:
+> The ergonomics of Babashka, combined with the simplicity and reach of Clojure, make it a great choice for writing Functions in OpenFaaS, from single purpose Functions, to REST APIs, to serving hiccup backed HTML pages - delivered with a back-to-back joyful development experience.
 
-* Babashka scripts run immediately, ensuring:
-** that Function cold start times are kept to a minimum.
-** a rapid development feedback loop.
-** a simple REPL workflow - just start everything all over again, it's fast.
-* Babashka is designed for minimal memory usage, allowing you to scale up your single-purpose Functions with comparable RAM consumption.
+Babashka is designed for minimal memory usage, allowing you to scale up your narrow-purposed Functions with comparable RAM consumption.
+
+Babashka scripts run immediately, ensuring:
+
+* that Function cold start times are kept to a minimum.
+* a rapid development feedback loop.
+* a simple REPL workflow - just start everything all over again, it's fast.
 
 == Prerequisites
 
