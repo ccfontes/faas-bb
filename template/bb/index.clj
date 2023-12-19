@@ -12,7 +12,6 @@
     [ring.util.string :as ring-string]
     [compojure.response :as response]
     [babashka.fs :as fs]
-    [clojure.string :as str]
     [clojure.edn :as edn]
     [handler :as function]))
 
