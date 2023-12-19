@@ -33,6 +33,11 @@
   "asd" => "asd"
   :qwer => "qwer")
 
+(eg index/->secret
+  [_ "{:foo \"bar\"}"] => {:foo "bar"}
+  ["foo" "bar"]           => {:foo "bar"}
+  ["foo" "[1 \"baz\"]"]   => {:foo [1 "baz"]})
+
 (eg index/keywords?
   true  => true
   false => false
