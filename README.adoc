@@ -63,7 +63,7 @@ A new project is created for a function defined as `my-bb-function`. It will con
 In `bb` language:
 [source, clojure]
 ----
-(defn handler [{:keys [headers body context]} :as event]
+(defn handler [{:keys [headers body context] :as event}]
   ...)
 ----
 
