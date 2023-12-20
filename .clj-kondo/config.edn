@@ -2,7 +2,8 @@
   {:redefined-var {:level :off}
    :duplicate-require {:level :off}
    :namespace-name-mismatch {:level :off}}
- :config-in-ns {tests {:linters {:unresolved-symbol {:exclude [(eg/eg)
-                                                               (eg/ex)
-                                                               (plumula.mimolette.alpha/defspec-test [spec-check-index])]}}}
+   :config-in-ns {tests {:linters {:unresolved-symbol {:exclude [(defnk)
+                                                                 (eg/eg)
+                                                                 (eg/ex)
+                                                                 (plumula.mimolette.alpha/defspec-test [spec-check-index])]}}}
                 index {:linters {:invalid-arity {:level :off}}}}}
