@@ -9,6 +9,7 @@
     [ring.middleware.text :as middleware-text]
     [ring.util.walk :as ring-walk]
     [ring.util.string :as ring-string]
+    [secrets]
     [index]))
 
 (eg middleware-text/text-request?
@@ -33,7 +34,7 @@
   "asd" => "asd"
   :qwer => "qwer")
 
-(eg index/->secret
+(eg secrets/->secret
   [_ "{:foo \"bar\"}"] => {:foo "bar"}
   ["foo" "bar"]           => {:foo "bar"}
   ["foo" "[1 \"baz\"]"]   => {:foo [1 "baz"]})
