@@ -65,9 +65,6 @@ In `bb` language:
 ----
 (defn handler [{:keys [headers body context]} :as event]
   ...)
-; or
-(defnk handler [body headers context]
-  ...)
 ----
 
 `headers` contains headers, as such:
