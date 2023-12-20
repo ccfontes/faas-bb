@@ -63,18 +63,20 @@ A new project is created for a function defined as `my-bb-function`. It will con
 In `bb` language:
 [source, clojure]
 ----
-(defn handler [{:keys [headers body context] :as event}]
+(defn handler [{:keys [headers body context]} :as event]
+  ...)
+; or
+(defnk handler [body headers context]
   ...)
 ----
-`event` is a map containing `:headers`, `:body` and `:context` keys.
 
-`:headers` contains headers, as such:
+`headers` contains headers, as such:
 [source, clojure]
 ----
 {:content-type "application/json"}
 ----
 
-`:body` is the payload body. When passing a JSON object payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
+`body` is the payload body. When passing a JSON object payload and using `bb` language, the payload will be automatically parsed as a Clojure map with keyword keys. There are cases where it's preferable to have string keys in the payload body, and it's possible to support them by setting `keywords: false` in the Function in `stack.yml`:
 [source, yml]
 ----
 my-function:

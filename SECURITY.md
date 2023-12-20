@@ -2,10 +2,12 @@
 
 ## Supported Versions
 
-The latest version in the most recent commit of the `main` branch.
+The most recent commit of the `main` branch.
 
 ## Reporting a vulnerability
-Please send an email to mail@ccfontes.com. We take all reports seriously and will investigate each issue reported to us.
+Please send an email to mail@ccfontes.com.
+
+We take all reports seriously and will investigate each issue reported to us.
 
 ## What to expect after reporting a vulnerability 
 

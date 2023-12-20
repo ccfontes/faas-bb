@@ -1,4 +1,4 @@
 (ns handler)
 
-(defn handler [{:keys [body]}]
+(defnk handler [body]
   [(keys body) (vals body)])

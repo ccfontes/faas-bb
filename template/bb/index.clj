@@ -11,7 +11,10 @@
     [ring.util.walk :as ring-walk]
     [secrets :refer [->secrets]]
     [compojure.response :as response]
+    [plumbing.core :refer [defnk]]
     [handler :as function]))
+
+(intern 'clojure.core 'defnk #'defnk)
 
 (def keywords? #(if (nil? %) true %))
 

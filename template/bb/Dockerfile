@@ -17,6 +17,8 @@ RUN addgroup --system app && adduser --system --ingroup app app
 USER app
 WORKDIR $HOME
 
+RUN bb prepare -Sdeps 'prismatic/plumbing {:mvn/version "0.6.0"}'
+
 COPY --chown=app:app index.clj bb.edn lib merge_config.clj ./
 
 COPY --chown=app:app function/bb.edn* function/bb.edn
