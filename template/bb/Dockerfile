@@ -1,5 +1,5 @@
 FROM ghcr.io/openfaas/of-watchdog:0.9.13 AS watchdog
-FROM babashka/babashka:1.3.187-SNAPSHOT AS babashka
+FROM babashka/babashka:1.3.186 AS babashka
 FROM eclipse-temurin:8u392-b08-jdk AS build
 
 RUN set -e
@@ -19,10 +19,9 @@ WORKDIR $HOME
 
 COPY --chown=app:app index.clj bb.edn lib merge_config.clj ./
 
-RUN bb prepare
-
 COPY --chown=app:app function/bb.edn* function/bb.edn
 RUN bb merge-config --src "function/bb.edn" --out "ship.edn" && \
+    mkdir ~/.m2 && \
     bb --config ship.edn prepare && \
     bb --config ship.edn print-deps && \
     cp -r .m2 .m2-ship

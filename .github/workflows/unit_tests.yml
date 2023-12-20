@@ -19,7 +19,7 @@ jobs:
       with:
         java-version: 8
     - name: Install Babashka 
-      run: bash < <(curl https://raw.githubusercontent.com/babashka/babashka/master/install) --dev-build
+      run: bash < <(curl https://raw.githubusercontent.com/babashka/babashka/master/install) --dev-build --dir /usr/local/bin
     - name: Run unit tests
       run: bb --config tests.edn tests.clj
       working-directory: ${{ github.workspace }}/template/bb
