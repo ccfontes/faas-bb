@@ -17,7 +17,8 @@ RUN addgroup --system app && adduser --system --ingroup app app
 USER app
 WORKDIR $HOME
 
-COPY --chown=app:app index.clj bb.edn lib merge_config.clj ./
+COPY --chown=app:app index.clj bb.edn merge_config.clj ./
+COPY --chown=app:app lib lib
 
 COPY --chown=app:app function/bb.edn* function/bb.edn
 RUN bb merge-config --src "function/bb.edn" --out "ship.edn" && \

@@ -1,4 +1,4 @@
-{:paths ["." "function"]
+{:paths ["." "lib" "function"]
  :tasks {run-function index/-main
          test test.run-tests/-main
          merge-config merge-config/-main}}
