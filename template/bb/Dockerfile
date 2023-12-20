@@ -17,13 +17,12 @@ RUN addgroup --system app && adduser --system --ingroup app app
 USER app
 WORKDIR $HOME
 
-RUN bb prepare -Sdeps '{:deps {prismatic/plumbing {:mvn/version "0.6.0"}}}'
-
 COPY --chown=app:app index.clj bb.edn lib merge_config.clj ./
+
+RUN bb prepare
 
 COPY --chown=app:app function/bb.edn* function/bb.edn
 RUN bb merge-config --src "function/bb.edn" --out "ship.edn" && \
-    mkdir ~/.m2 && \
     bb --config ship.edn prepare && \
     bb --config ship.edn print-deps && \
     cp -r .m2 .m2-ship
