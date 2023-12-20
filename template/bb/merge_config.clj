@@ -9,7 +9,7 @@
 (defn -main [& cli-args]
   (let [{:keys [src test out]} (cli/parse-opts cli-args {:spec cli-options})]
     (spit out
-      (merge
+      (merge-with merge
         (-> "bb.edn" slurp edn/read-string)
         (or
           (merge-with merge
