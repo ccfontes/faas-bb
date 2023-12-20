@@ -1,5 +1,4 @@
 {:paths ["." "function"]
- :deps {prismatic/plumbing {:mvn/version "0.6.0"}}
  :tasks {run-function index/-main
          test test.run-tests/-main
          merge-config merge-config/-main}}

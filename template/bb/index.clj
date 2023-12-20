@@ -11,7 +11,6 @@
     [ring.util.walk :as ring-walk]
     [secrets :refer [->secrets]]
     [compojure.response :as response]
-    [interns] ; side-effects before 'handler' ns
     [handler :as function]))
 
 (def keywords? #(if (nil? %) true %))

@@ -4,7 +4,7 @@
 
 The most recent commit of the `main` branch.
 
-Template's Dockerfile image uses `babashka/babashka:1.3.187-SNAPSHOT` so the template might change unpredictably. We use SNAPSHOT version to be able to use `defnk`. Once Babashka 1.3.187 is released, will upgrade to `babashka/babashka:1.3.187`.
+Template's Dockerfile image uses `babashka/babashka:1.3.187-SNAPSHOT` so the template might change unpredictably. We use SNAPSHOT version to be able to use `defnk` from [plumbing](https://github.com/plumatic/plumbing). Once Babashka 1.3.187 is released, will upgrade to `babashka/babashka:1.3.187`.
 
 ## Reporting a vulnerability
 Please send an email to mail@ccfontes.com.
