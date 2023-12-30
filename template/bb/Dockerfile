@@ -1,5 +1,5 @@
 FROM ghcr.io/openfaas/of-watchdog:0.9.13 AS watchdog
-FROM babashka/babashka:1.3.186 AS babashka
+FROM babashka/babashka:1.3.187-SNAPSHOT AS babashka
 FROM eclipse-temurin:8u392-b08-jdk AS build
 
 RUN set -e
