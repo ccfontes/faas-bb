@@ -16,7 +16,7 @@
 (defn ->secrets []
   (when (fs/exists? secrets-dir)
     (->> (fs/list-dir secrets-dir)
-      (map #(let [filepath (-> % str)
-                  secret-raw (slurp filepath)]
-             (->secret filepath secret-raw)))
+      (keep #(let [filepath (str %)]
+               (when (fs/regular-file? filepath)
+                 (->secret filepath (slurp filepath)))))
       (apply merge))))
