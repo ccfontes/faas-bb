@@ -13,7 +13,7 @@ An https://github.com/openfaas[OpenFaaS] template for writing Functions in https
 
 == Why
 
-> The ergonomics of Babashka, combined with the simplicity, make it a great choice for writing Functions in OpenFaaS, from single purpose Functions, to frontend facing REST APIs, to serving hiccup backed HTML pages - delivered with a back-to-back joyful development experience.
+> The ergonomics of Babashka, combined with the simplicity of Clojure, make it a great choice for writing Functions in OpenFaaS, from single purpose Functions, to frontend facing REST APIs, to serving hiccup backed HTML pages - delivered with a back-to-back joyful development experience.
 
 Babashka is designed for minimal memory usage, allowing you to scale up your narrow-purposed Functions with comparable RAM consumption.
 
